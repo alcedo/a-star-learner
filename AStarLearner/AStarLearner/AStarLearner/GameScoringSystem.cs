@@ -5,8 +5,26 @@ using System.Text;
 
 namespace AStarLearner
 {
-    class GameScoringSystem
+    // Usage: GameScoringSystem.Instance.addScore(int totalGameTime);
+    public sealed class GameScoringSystem
     {
+        // Singleton pattern
+        static readonly GameScoringSystem _instance = new GameScoringSystem();
+
+        public static GameScoringSystem Instance
+        {
+            get { return _instance; }
+        }
+
+        /// <summary>
+        /// This is a private constructor, meaning no outsides have access.
+        /// </summary>
+        private GameScoringSystem()
+        {
+            
+        }
+
+
         /***************    Scoring Constants     ****************/
         // This score increment is per moves made and is independent of the speed and combo.
         private const int baseScore = 2;
@@ -37,9 +55,7 @@ namespace AStarLearner
         public void addScore(int gameTime)
         {
             int score = 0;  
-
-            comboCount++;
-
+            
             // Calculate how fast the user managed to get a correct answer. if < 3 seconds, award extra pts
             if (gameTime - previousGameTime < 3)  score = score + speedScore;
 
@@ -48,6 +64,8 @@ namespace AStarLearner
             if (comboCount % 10 == 0) score = score + bonusScore;
 
             totalScore += score; // Update overall score.
+            
+            comboCount++;
         }
 
         // Subtract scores from user when a wrong move is made. 
@@ -61,7 +79,7 @@ namespace AStarLearner
         /// <summary>
         /// This class stores all relevant game score information
         /// </summary>
-        class UserScoreRecords
+        public class UserScoreRecords
         {
             public string name;            // User name 
             public int userID;             // User ID 
