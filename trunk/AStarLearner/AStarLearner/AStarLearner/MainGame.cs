@@ -378,12 +378,13 @@ namespace AStarLearner
                 }
             }
         }
+     
         protected override void Update(GameTime gameTime)
         {
 
             float SecondsPassed = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            int totalGameTime = gameTime.TotalGameTime.Seconds; 
-
+            int totalGameTime = gameTime.TotalGameTime.Seconds;
+            
             particleEffect.Update(SecondsPassed);
             base.Update(gameTime);
         }
