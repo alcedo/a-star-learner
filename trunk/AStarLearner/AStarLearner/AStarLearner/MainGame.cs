@@ -202,7 +202,8 @@ namespace AStarLearner
 
                     if (checkSolutionIntersection(jointPosition))
                     {
-                        particleEffect.Trigger(jointPosition);
+                        
+                        particleEffect.Trigger(jointPosition); //To-do:Victor Please help to confirm if this can be remove as particleEffect.Trigger is already called in correctChoice
                         correctChoice(jointPosition);
                     }
                     else
@@ -225,8 +226,8 @@ namespace AStarLearner
 
         private void correctChoice(Vector2 pos)
         {
-            generateGameSet();
-            particleEffect.Trigger(pos);
+            particleEffect.Trigger(pos); //To-do:Kenny particleEffect.Trigger position to be at where the object is instead of collision
+            generateGameSet(); //To-do:Kenny give a second or two of pause before the next set comes in
             correct_snd.MultiPlay();           
         }
 
@@ -349,7 +350,7 @@ namespace AStarLearner
  
 
             ResetSquareColors();
-*/
+            */
         }
 
         private void ResetSquareColors()
