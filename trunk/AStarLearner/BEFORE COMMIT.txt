@@ -1,0 +1,10 @@
+Files type to commit
+1) Files that is just added
+2) .sln files
+3) .cs files
+4) .csproj files
+
+Files not needed
+1) .suo files
+2) .cache
+3) .user
