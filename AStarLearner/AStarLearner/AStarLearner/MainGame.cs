@@ -31,7 +31,7 @@ namespace AStarLearner
         int score;
 
         public Random rand = new Random((int)DateTime.Now.Ticks);
-
+   
         private const int EdgeOffset = 10;
         private const int HotSpotSizes = 100;
         private const float HotSpotAlpha = 0.5f;
@@ -64,6 +64,11 @@ namespace AStarLearner
         private List<Vector2> gameObjectPosition = new List<Vector2>();
 
         private GameObject solutionObjectReplica;
+
+        //Question related Variable
+        private int intervalBtwQuestion = 3000;
+        private bool questionIsCorrect = false;
+        private double intervalTime = 0;
 
         /// <summary>
         /// This function would randomly select and set for us the correct solution. and 
@@ -110,9 +115,19 @@ namespace AStarLearner
             return choice;
         }
 
+        //Destory game set
+        public void destroyGameSet()
+        {
+            //solutionObjectReplica = null;
+            currentGameSet.Clear();
+            gameObjectPosition.Clear();
+            gameObjectPosition.Clear();
+        }
+
         // Remember to draw objects
         public List<GameObject> generateGameSet()
         {
+            questionIsCorrect = false;
             solutionObjectReplica = null;
             currentGameSet.Clear();
             gameObjectPosition.Clear();
@@ -188,7 +203,7 @@ namespace AStarLearner
                     Vector2 jointPosition = joint.GetScreenPosition(kinectRuntime, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
                     //solutionObjectReplica.Position = jointPosition;
                     
-                    if (checkSolutionIntersection(jointPosition))
+                    if (!questionIsCorrect && checkSolutionIntersection(jointPosition))
                     {
                         correctChoice(jointPosition);
                     }
@@ -205,7 +220,7 @@ namespace AStarLearner
                     Vector2 jointPosition = joint.GetScreenPosition(kinectRuntime, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
                     //solutionObjectReplica.Position = jointPosition;
 
-                    if (checkSolutionIntersection(jointPosition))
+                    if (!questionIsCorrect && checkSolutionIntersection(jointPosition))
                     {
                         
                         particleEffect.Trigger(jointPosition); //To-do:Victor Please help to confirm if this can be remove as particleEffect.Trigger is already called in correctChoice
@@ -232,7 +247,9 @@ namespace AStarLearner
         private void correctChoice(Vector2 pos)
         {
             particleEffect.Trigger(pos); //To-do:Kenny particleEffect.Trigger position to be at where the object is instead of collision
-            generateGameSet(); //To-do:Kenny give a second or two of pause before the next set comes in
+            questionIsCorrect = true;
+            destroyGameSet();
+            //generateGameSet(); //remove this line once destroyGameSet() is implemented.
             correct_snd.MultiPlay();
             this.score++; //updating the score 
         }
@@ -394,6 +411,21 @@ namespace AStarLearner
                 }
             }
         }
+
+        
+        private bool intervalTimeUp(GameTime gameTime)
+        {
+            bool intervalTimeUp = false;
+            
+            intervalTime += (float)gameTime.ElapsedGameTime.Milliseconds;
+
+            if ( intervalTime >= intervalBtwQuestion)
+            {
+                intervalTime = 0;
+                intervalTimeUp = true;
+            }
+            return intervalTimeUp;
+        }
      
         protected override void Update(GameTime gameTime)
         {
@@ -402,6 +434,12 @@ namespace AStarLearner
             int totalGameTime = gameTime.TotalGameTime.Seconds;
             
             particleEffect.Update(SecondsPassed);
+            
+            if (questionIsCorrect && intervalTimeUp(gameTime))
+            {
+                generateGameSet();
+            }
+
             base.Update(gameTime);
         }
 
@@ -416,6 +454,7 @@ namespace AStarLearner
 
             // Draw string
             string output = "Score: " + this.score;
+            //string output = "" + intervalTime;
 
             // Find the center of the string
             Vector2 fontOrigin = font.MeasureString(output) / 2;
@@ -427,7 +466,7 @@ namespace AStarLearner
 
             foreach (GameObject g in currentGameSet)
                 g.Draw(spriteBatch);
-
+            
             solutionObjectReplica.Draw(spriteBatch);
 
             /*
