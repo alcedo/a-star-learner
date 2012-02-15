@@ -140,7 +140,7 @@ namespace XNATweener
         }
 
         public void Start()
-        {   
+        {   /// tutorial on delegates : http://www.akadia.com/services/dotnet_delegates_and_events.html
             //un comment to ciew how delegates and event works
             //this.Ended += new EndHandler(testPrint);
             //this.Ended += new EndHandler(testPrint2);
