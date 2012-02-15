@@ -8,7 +8,7 @@ namespace XNATweener
     public class Tweener
     {
         public Tweener(float from, float to, float duration, TweeningFunction tweeningFunction)
-        {
+        {    
             _from = from;
             _position = from;
             _change = to - from;
@@ -110,6 +110,7 @@ namespace XNATweener
             {
                 return;
             }
+      
             Position = tweeningFunction(elapsed, from, change, duration);
             elapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (elapsed >= duration)
@@ -128,8 +129,21 @@ namespace XNATweener
             }
         }
 
-        public void Start()
+        private void testPrint()
         {
+            Console.Out.WriteLine("Ended!");
+        }
+
+        private void testPrint2()
+        {
+            Console.Out.WriteLine("Ended2");
+        }
+
+        public void Start()
+        {   
+            //un comment to ciew how delegates and event works
+            //this.Ended += new EndHandler(testPrint);
+            //this.Ended += new EndHandler(testPrint2);
             Running = true;
         }
 
