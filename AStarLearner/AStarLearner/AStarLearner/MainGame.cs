@@ -16,6 +16,7 @@ namespace AStarLearner
 {
     public class MainGame : Game
     {
+        //--Ryan changed dimensions
         //Game window dimensions
         public const int gameWidth = 1000;
         public const int gameHeight = 708;
@@ -31,7 +32,7 @@ namespace AStarLearner
         int score;
 
         public Random rand = new Random((int)DateTime.Now.Ticks);
-   
+
         private const int EdgeOffset = 10;
         private const int HotSpotSizes = 100;
         private const float HotSpotAlpha = 0.5f;
@@ -55,7 +56,7 @@ namespace AStarLearner
         // Each gameSet would have 1 Correct Solution Object and multiple selection Object
         // The correct solution object should be placed in the first index.
         private List<GameObject> currentGameSet = new List<GameObject>();
-        
+
         //Stores a list of gameSet.
         private List<String> gameSetList = new List<String>();
 
@@ -101,13 +102,13 @@ namespace AStarLearner
         /// <returns>a list of ordered list of numbers</returns>
         public List<int> genRandomNumberList(int min, int max)
         {
-          
+
             // Fill this list of random numbers, w/o repetitions
             List<int> choice = new List<int>();
             while (choice.Count != max)
             {
                 int num = rand.Next(min, max);
-                
+
                 if (!choice.Contains(num))
                     choice.Add(num);
             }
@@ -134,7 +135,7 @@ namespace AStarLearner
             int xSpacing = 5;
 
             var set = Content.LoadContent<Texture2D>("Level1\\" + getRandomGameSet());
-            
+
             List<string> contentName = new List<string>();
             foreach (string s in set.Keys)
                 contentName.Add(s);
@@ -150,6 +151,8 @@ namespace AStarLearner
             GameSprite selectionSprite3 = new GameSprite(set[contentName[contentRand[3]]], 1, 1, 0, 0);
             // GameSprite selectionSprite4 = new GameSprite(set1["yellow_ball"]  , 1, 1, 0, 0);
 
+
+            //---Ryan change the cooordinates 
             // Store positions. These are namely 2 on the left, 2 on the right
             gameObjectPosition.Add(new Vector2(190, 235)); //top left 
             gameObjectPosition.Add(new Vector2(190, 560)); // bottom left 
@@ -158,8 +161,8 @@ namespace AStarLearner
 
             // Generate position placement choices randomly
             List<int> randPosn = new List<int>();
-            
-         
+
+
             while (randPosn.Count != gameObjectPosition.Count)
             {
                 int choice = rand.Next(0, gameObjectPosition.Count);
@@ -170,7 +173,7 @@ namespace AStarLearner
             // Create solution object
             GameObject solutionObj = new GameObject(solutionSprite, gameObjectPosition[randPosn[0]]);
             solutionObj.isSolutionObject = true;
-            
+
             // Create a replica of the solution object for display purposes only 
             solutionObjectReplica = new GameObject(solutionSprite, 500, 125);
 
@@ -185,7 +188,7 @@ namespace AStarLearner
             currentGameSet.Add(solutionObj); //Solution is always the first
             currentGameSet.Add(selectionObject1);
             currentGameSet.Add(selectionObject2);
-            currentGameSet.Add(selectionObject3);             
+            currentGameSet.Add(selectionObject3);
 
             return currentGameSet;
         }
@@ -196,13 +199,13 @@ namespace AStarLearner
         {
             foreach (Joint joint in joints)
             {
-               
+
                 if (joint.ID == JointID.HandRight)
                 {
                     // Place solution object replica on the person's hand
                     Vector2 jointPosition = joint.GetScreenPosition(kinectRuntime, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
                     //solutionObjectReplica.Position = jointPosition;
-                    
+
                     if (!questionIsCorrect && checkSolutionIntersection(jointPosition))
                     {
                         correctChoice(jointPosition);
@@ -222,7 +225,7 @@ namespace AStarLearner
 
                     if (!questionIsCorrect && checkSolutionIntersection(jointPosition))
                     {
-                        
+
                         particleEffect.Trigger(jointPosition); //To-do:Victor Please help to confirm if this can be remove as particleEffect.Trigger is already called in correctChoice
                         correctChoice(jointPosition);
                     }
@@ -230,18 +233,18 @@ namespace AStarLearner
                     {
                         wrongChoice();
                     }
-                }               
+                }
             }
         }
 
         private bool checkSolutionIntersection(Vector2 jointPosition)
         {
-          
+
             Rectangle rectangle = new Rectangle((int)jointPosition.X - (JointIntersectionSize / 2),
                                    (int)jointPosition.Y - (JointIntersectionSize / 2), JointIntersectionSize, JointIntersectionSize);
 
-            return currentGameSet[0].Collision(rectangle);            
-  
+            return currentGameSet[0].Collision(rectangle);
+
         }
 
         private void correctChoice(Vector2 pos)
@@ -278,7 +281,7 @@ namespace AStarLearner
             {
                 GraphicsDeviceService = graphics
             };
-            
+
         }
 
         protected override void Initialize()
@@ -289,7 +292,7 @@ namespace AStarLearner
 
             kinectRuntime.VideoFrameReady += VideoFrameReady;
             kinectRuntime.SkeletonFrameReady += SkeletonFrameReady;
-            
+
             particleEffect.Initialise();
 
             base.Initialize();
@@ -306,12 +309,12 @@ namespace AStarLearner
             // Rendering inits. 
             spriteBatch = new SpriteBatch(GraphicsDevice);
             kinectRGBVideo.Texture = new Texture2D(GraphicsDevice, gameWidth, gameHeight, false, SurfaceFormat.Color);
-            kinectRGBVideo.Position = new Vector2(183, 228);
+            kinectRGBVideo.Position = new Vector2(183, 228); //Ryan --- changed position
 
             // Game Set inits.
             initGameSetList();
             generateGameSet();
-            
+
             // Load sounds 
             correct_snd = new GameSFX(Content.Load<SoundEffect>("kling"));
 
@@ -402,39 +405,39 @@ namespace AStarLearner
 
             SkeletonFrame skeletonFrame = e.SkeletonFrame;
             ResetSquareColors();
-      
+
             foreach (SkeletonData data in skeletonFrame.Skeletons)
             {
                 if (data.TrackingState == SkeletonTrackingState.Tracked)
-                {   
+                {
                     gameLogic(data.Joints);
                 }
             }
         }
 
-        
+
         private bool intervalTimeUp(GameTime gameTime)
         {
             bool intervalTimeUp = false;
-            
+
             intervalTime += (float)gameTime.ElapsedGameTime.Milliseconds;
 
-            if ( intervalTime >= intervalBtwQuestion)
+            if (intervalTime >= intervalBtwQuestion)
             {
                 intervalTime = 0;
                 intervalTimeUp = true;
             }
             return intervalTimeUp;
         }
-     
+
         protected override void Update(GameTime gameTime)
         {
 
             float SecondsPassed = (float)gameTime.ElapsedGameTime.TotalSeconds;
             int totalGameTime = gameTime.TotalGameTime.Seconds;
-            
+
             particleEffect.Update(SecondsPassed);
-            
+
             if (questionIsCorrect && intervalTimeUp(gameTime))
             {
                 generateGameSet();
@@ -466,7 +469,7 @@ namespace AStarLearner
 
             foreach (GameObject g in currentGameSet)
                 g.Draw(spriteBatch);
-            
+
             solutionObjectReplica.Draw(spriteBatch);
 
             /*
