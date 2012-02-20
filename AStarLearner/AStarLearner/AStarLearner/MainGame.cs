@@ -16,6 +16,9 @@ namespace AStarLearner
 {
     public class MainGame : Game
     {
+        // Kenny Debug
+        public bool kennyDebug = true;
+
         //--Ryan changed dimensions
         //Game window dimensions
         public const int gameWidth = 1000;
@@ -184,11 +187,21 @@ namespace AStarLearner
             // right hand side 
             GameObject selectionObject3 = new GameObject(selectionSprite3, gameObjectPosition[randPosn[3]]);
 
+            // Kenny Debug Initi
+            GameObject lefthand = new GameObject(selectionSprite3, new Vector2(0, 0));
+            GameObject righthand = new GameObject(selectionSprite3, new Vector2(0, 0));
+          
             // Add to current game set 
             currentGameSet.Add(solutionObj); //Solution is always the first
             currentGameSet.Add(selectionObject1);
             currentGameSet.Add(selectionObject2);
             currentGameSet.Add(selectionObject3);
+            // Kenny Debug
+            if (kennyDebug)
+            {
+                currentGameSet.Add(lefthand);
+                currentGameSet.Add(righthand);
+            }
 
             return currentGameSet;
         }
@@ -205,6 +218,13 @@ namespace AStarLearner
                     // Place solution object replica on the person's hand
                     Vector2 jointPosition = joint.GetScreenPosition(kinectRuntime, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
                     //solutionObjectReplica.Position = jointPosition;
+                    if (kennyDebug)
+                    {
+                        if (kennyDebug)
+                        {
+                            updateHands("right", jointPosition);
+                        }
+                    }
 
                     if (!questionIsCorrect && checkSolutionIntersection(jointPosition))
                     {
@@ -222,6 +242,11 @@ namespace AStarLearner
                     // Place solution object replica on the person's hand
                     Vector2 jointPosition = joint.GetScreenPosition(kinectRuntime, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
                     //solutionObjectReplica.Position = jointPosition;
+
+                    if (kennyDebug)
+                    {
+                        updateHands("left", jointPosition);
+                    }
 
                     if (!questionIsCorrect && checkSolutionIntersection(jointPosition))
                     {
@@ -254,12 +279,38 @@ namespace AStarLearner
             destroyGameSet();
             //generateGameSet(); //remove this line once destroyGameSet() is implemented.
             correct_snd.MultiPlay();
-            this.score++; //updating the score 
+            this.score++; //updating the score
         }
 
         private void wrongChoice()
         {
             // play sound. 
+        }
+
+        private void updateHands(String hand, Vector2 pos) 
+        {
+            // Kenny Debug
+            var set = Content.LoadContent<Texture2D>("Level1\\" + getRandomGameSet());
+
+            List<string> contentName = new List<string>();
+            foreach (string s in set.Keys)
+                contentName.Add(s);
+
+            List<int> contentRand = genRandomNumberList(0, contentName.Count);
+            GameSprite selectionSprite4 = new GameSprite(set[contentName[contentRand[3]]], 1, 1, 0, 0);
+
+            GameObject onehand = new GameObject(selectionSprite4, pos);
+            if (currentGameSet.Count > 0)
+            {
+                if (hand.Equals("left"))
+                {
+                    currentGameSet[4] = onehand;
+                }
+                else if (hand.Equals("right"))
+                {
+                    currentGameSet[5] = onehand;
+                }
+            }
         }
 
         public MainGame()
@@ -444,6 +495,8 @@ namespace AStarLearner
             }
 
             base.Update(gameTime);
+
+
         }
 
         protected override void Draw(GameTime gameTime)
