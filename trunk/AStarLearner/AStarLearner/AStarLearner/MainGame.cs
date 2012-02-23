@@ -13,6 +13,7 @@ using ProjectMercury.Renderers;
 using AStarLearner.DebugHelper;
 using Neat.Graphics;
 using XNATweener;
+using AStarLearner.InteractiveElements;
 
 namespace AStarLearner
 {
@@ -43,6 +44,9 @@ namespace AStarLearner
         Texture2D UI_FrameLayer;
         Vector2 UI_FrameLayerPosition;
         Vector2 kinectFrameOffset;
+
+        //Interactive Elements
+        TextAnimator textAnimator;
 
         //Sprite Font: Display font on the screen
         SpriteFont font;
@@ -163,7 +167,6 @@ namespace AStarLearner
             solutionObjectReplica = null;
             currentGameSet.Clear();
             gameObjectPosition.Clear();
-            int xSpacing = 5;
 
             var set = Content.LoadContent<Texture2D>("Level1\\" + getRandomGameSet());
 
@@ -314,12 +317,14 @@ namespace AStarLearner
             destroyGameSet();
             //generateGameSet(); //remove this line once destroyGameSet() is implemented.
             correct_snd.MultiPlay();
-            this.score++; //updating the score
+            this.score++;
+            textAnimator.Start();
         }
 
         private void wrongChoice()
         {
             // play sound. 
+
         }
 
         private void updateHands(String hand, Vector2 pos) 
@@ -434,6 +439,9 @@ namespace AStarLearner
             font = Content.Load<SpriteFont>("SpriteFont");
             fontPos = new Vector2(535, 25);
 
+            // Interactive elements (text animator) 
+            textAnimator = new TextAnimator(Content.Load<SpriteFont>("SpriteFont"));
+
             // Debug inits
             shapeDebugger.init(GraphicsDevice);
 
@@ -499,8 +507,11 @@ namespace AStarLearner
 
             if (questionIsCorrect && intervalTimeUp(gameTime))
             {
+                textAnimator.Stop();
                 generateGameSet();
             }
+
+            textAnimator.updateTweener(gameTime);
 
             base.Update(gameTime);
 
@@ -520,14 +531,15 @@ namespace AStarLearner
             // Draw UI frame Border 
             spriteBatch.Draw(UI_FrameLayer, UI_FrameLayerPosition, Color.White);
 
-            // Draw string
+            // Draw Font Sprites
             string output = "" + this.score;
             //string output = "" + intervalTime;
 
             // Find the center of the string
             Vector2 fontOrigin = font.MeasureString(output) / 2;
-            // Draw string
+            // Draw fontSprite
             spriteBatch.DrawString(font, output, fontPos, Color.Black, 0, fontOrigin, 1.5f, SpriteEffects.None, 0.5f);
+
 
             ////////////////////////// Deubg Overlays ///////////////////////////////////
             // Note: kinectRuntime.VideoStream.Width / Height is equivalent to the resolution set in init function
@@ -538,8 +550,15 @@ namespace AStarLearner
 
             // this.shapeDebugger.drawShapeOverlay(spriteBatch);
 
-
             spriteBatch.End();   // End Sprite batch 
+
+
+            /////// Interactive Element (text anim) ///////// 
+            textAnimator.DrawText("Good Job!~", spriteBatch,
+                                  new Vector2(gameWidth / 2, -gameHeight / 4),
+                                  new Vector2(gameWidth / 2, gameHeight -20),
+                                  2.0f);
+
 
             particleRenderer.RenderEffect(particleEffect);
 

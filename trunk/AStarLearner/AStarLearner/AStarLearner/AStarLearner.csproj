@@ -144,6 +144,7 @@
     <Compile Include="GestureRecognition.cs" />
     <Compile Include="HandTracer.cs" />
     <Compile Include="InputManager.cs" />
+    <Compile Include="InteractiveElements\TextAnimator.cs" />
     <Compile Include="Kinect.cs" />
     <Compile Include="KinectExtensions.cs" />
     <Compile Include="Linear.cs" />
