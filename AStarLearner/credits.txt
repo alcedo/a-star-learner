@@ -1,0 +1,5 @@
+IXNAE game library
+mercury particle effects
+neat game library
+microsoft Game State Management (Mango, C#/VB)
+XNA tweener on codeplex
