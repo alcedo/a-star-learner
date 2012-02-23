@@ -80,6 +80,26 @@ namespace AStarLearner
         private bool questionIsCorrect = false;
         private double intervalTime = 0;
 
+        public MainGame()
+        {
+            graphics = new GraphicsDeviceManager(this);
+
+            graphics.PreferredBackBufferWidth = gameWidth;
+            graphics.PreferredBackBufferHeight = gameHeight;
+
+            this.graphics.IsFullScreen = isFullScreen;
+
+            Content.RootDirectory = "Content";
+
+            particleEffect = new ParticleEffect();
+            particleRenderer = new SpriteBatchRenderer
+            {
+                GraphicsDeviceService = graphics
+            };
+
+        }
+
+        #region Gameplay functions and logic
         /// <summary>
         /// This function would randomly select and set for us the correct solution. and 
         /// pick random "non correct" red - herrings. 
@@ -326,31 +346,36 @@ namespace AStarLearner
             }
         }
 
-        public MainGame()
+
+        private bool intervalTimeUp(GameTime gameTime)
         {
-            graphics = new GraphicsDeviceManager(this);
+            bool intervalTimeUp = false;
 
-            graphics.PreferredBackBufferWidth = gameWidth;
-            graphics.PreferredBackBufferHeight = gameHeight;
+            intervalTime += (float)gameTime.ElapsedGameTime.Milliseconds;
 
-            //graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            //graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-
-            this.graphics.IsFullScreen = isFullScreen;
-
-            Content.RootDirectory = "Content";
-
-            particleEffect = new ParticleEffect();
-            particleRenderer = new SpriteBatchRenderer
+            if (intervalTime >= intervalBtwQuestion)
             {
-                GraphicsDeviceService = graphics
-            };
-
+                intervalTime = 0;
+                intervalTimeUp = true;
+            }
+            return intervalTimeUp;
         }
 
+        private void ResetSquareColors()
+        {
+            foreach (GameTextureInstance texture in hotSpots)
+                texture.Color = Color.Red;
+        }
+
+        #endregion
+
+        #region XNA Run time functions
+        ////////////////////////////////
+        /** XNA Run time functions **/
+        ////////////////////////////////
         protected override void Initialize()
         {
-           
+
             kinectRuntime = new Runtime();
             kinectRuntime.Initialize(RuntimeOptions.UseColor | RuntimeOptions.UseSkeletalTracking | RuntimeOptions.UseDepthAndPlayerIndex);
             kinectRuntime.VideoStream.Open(ImageStreamType.Video, 2, ImageResolution.Resolution640x480, ImageType.Color);
@@ -359,19 +384,20 @@ namespace AStarLearner
             kinectRuntime.SkeletonFrameReady += SkeletonFrameReady;
 
             particleEffect.Initialise();
-          
+
             // Init Debugger overlay
             skeletonDebugger = new SkeletonOverlayDebugger(this.kinectRuntime);
 
-
+            
             base.Initialize();
         }
+
 
         protected override void OnExiting(object sender, EventArgs args)
         {
             kinectRuntime.Uninitialize();
             base.OnExiting(sender, args);
-        }
+        } 
 
         protected override void LoadContent()
         {
@@ -379,7 +405,7 @@ namespace AStarLearner
             spriteBatch = new SpriteBatch(GraphicsDevice);
             kinectRGBVideo.Texture = new Texture2D(GraphicsDevice, gameWidth, gameHeight, false, SurfaceFormat.Color);
             kinectRGBVideo.Position = new Vector2(183, 228); //Ryan --- changed position
-            this.kinectFrameOffset = new Vector2(183, 228); 
+            this.kinectFrameOffset = new Vector2(183, 228);
 
             // Game Set inits.
             initGameSetList();
@@ -408,7 +434,7 @@ namespace AStarLearner
 
             // Debug inits
             shapeDebugger.init(GraphicsDevice);
-            
+
             /*
             //skeleton right hand
             GameTextureInstance texture = GameTextureInstance.CreateBlank(GraphicsDevice, 20, 20);
@@ -461,53 +487,9 @@ namespace AStarLearner
             */
         }
 
-        private void ResetSquareColors()
-        {
-            foreach (GameTextureInstance texture in hotSpots)
-                texture.Color = Color.Red;
-        }
-
-        private void VideoFrameReady(object sender, ImageFrameReadyEventArgs e)
-        {
-            PlanarImage image = e.ImageFrame.Image;
-            kinectRGBVideo.Texture = image.ToTexture2D(GraphicsDevice);
-        }
-
-        private void SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
-        {
-
-            SkeletonFrame skeletonFrame = e.SkeletonFrame;
-            ResetSquareColors();
-
-            foreach (SkeletonData data in skeletonFrame.Skeletons)
-            {
-                if (data.TrackingState == SkeletonTrackingState.Tracked)
-                {
-                    gameLogic(data.Joints);
-                }
-            }
-
-            skeletonDebugger.SkeletonFrameReady(sender, e);
-        }
-
-
-        private bool intervalTimeUp(GameTime gameTime)
-        {
-            bool intervalTimeUp = false;
-
-            intervalTime += (float)gameTime.ElapsedGameTime.Milliseconds;
-
-            if (intervalTime >= intervalBtwQuestion)
-            {
-                intervalTime = 0;
-                intervalTimeUp = true;
-            }
-            return intervalTimeUp;
-        }
-
         protected override void Update(GameTime gameTime)
         {
-
+            
             float SecondsPassed = (float)gameTime.ElapsedGameTime.TotalSeconds;
             int totalGameTime = gameTime.TotalGameTime.Seconds;
 
@@ -527,12 +509,12 @@ namespace AStarLearner
         {
 
             GraphicsDevice.Clear(Color.CornflowerBlue);
- 
+
             spriteBatch.Begin();  // Begin Sprite batch 
-            
+
             // Draw textures from the Kinect Camera Stream
             kinectRGBVideo.Draw(spriteBatch);
-            
+
             // Draw UI frame Border 
             spriteBatch.Draw(UI_FrameLayer, UI_FrameLayerPosition, Color.White);
 
@@ -548,10 +530,10 @@ namespace AStarLearner
             ////////////////////////// Deubg Overlays ///////////////////////////////////
             // Note: kinectRuntime.VideoStream.Width / Height is equivalent to the resolution set in init function
             this.skeletonDebugger.DrawSkeletonOverlay_XNA(spriteBatch,
-                new LineBrush(GraphicsDevice, 1), this.kinectFrameOffset, 
-                new Vector2(kinectRuntime.VideoStream.Width, kinectRuntime.VideoStream.Height), 
+                new LineBrush(GraphicsDevice, 1), this.kinectFrameOffset,
+                new Vector2(kinectRuntime.VideoStream.Width, kinectRuntime.VideoStream.Height),
                 Color.Red);
- 
+
             // this.shapeDebugger.drawShapeOverlay(spriteBatch);
 
 
@@ -579,5 +561,36 @@ namespace AStarLearner
 
             base.Draw(gameTime);
         }
+        #endregion
+
+        #region Kinect run time Statements
+        ////////////////////////////////
+        /** Kinect Related Functions **/
+        ////////////////////////////////
+        private void VideoFrameReady(object sender, ImageFrameReadyEventArgs e)
+        {
+            PlanarImage image = e.ImageFrame.Image;
+            kinectRGBVideo.Texture = image.ToTexture2D(GraphicsDevice);
+        }
+
+        private void SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
+        {
+
+            SkeletonFrame skeletonFrame = e.SkeletonFrame;
+            ResetSquareColors();
+
+            foreach (SkeletonData data in skeletonFrame.Skeletons)
+            {
+                if (data.TrackingState == SkeletonTrackingState.Tracked)
+                {
+                    gameLogic(data.Joints);
+                }
+            }
+
+            skeletonDebugger.SkeletonFrameReady(sender, e);
+        }
+        #endregion
+
+
     }
 }
