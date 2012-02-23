@@ -120,6 +120,16 @@
     <Compile Include="Bounce.cs" />
     <Compile Include="Circular.cs" />
     <Compile Include="Cubic.cs" />
+    <Compile Include="DebugHelper\LineBrush.cs" />
+    <Compile Include="DebugHelper\Mathematics\GeometryHelper.cs" />
+    <Compile Include="DebugHelper\Mathematics\LineSegment.cs" />
+    <Compile Include="DebugHelper\Mathematics\Polygon.cs" />
+    <Compile Include="DebugHelper\Mathematics\Polygon_Experimental.cs" />
+    <Compile Include="DebugHelper\Mathematics\Polygon_SAT.cs" />
+    <Compile Include="DebugHelper\Mathematics\Polygon_Triangulator.cs" />
+    <Compile Include="DebugHelper\Mathematics\Triangle.cs" />
+    <Compile Include="DebugHelper\ShapesOverlayDebugger.cs" />
+    <Compile Include="DebugHelper\SkeletonOverlayDebugger.cs" />
     <Compile Include="Elastic.cs" />
     <Compile Include="Exponential.cs" />
     <Compile Include="GameContentLoader.cs" />
@@ -159,8 +169,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AStarLearnerContent\AStarLearnerContent.contentproj">
-      <Name>AStarLearnerContent</Name>
+      <Name>AStarLearnerContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
+      <Project>{B80E5476-B46F-4F96-A193-8E4A77425D2D}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +201,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--

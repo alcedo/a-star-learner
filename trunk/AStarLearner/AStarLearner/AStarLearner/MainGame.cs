@@ -10,24 +10,30 @@ using ProjectMercury;
 using ProjectMercury.Emitters;
 using ProjectMercury.Modifiers;
 using ProjectMercury.Renderers;
+using AStarLearner.DebugHelper;
+using Neat.Graphics;
 using XNATweener;
 
 namespace AStarLearner
 {
     public class MainGame : Game
     {
+        // Debugger overlay
+        SkeletonOverlayDebugger skeletonDebugger;
+        ShapesOverlayDebugger shapeDebugger = new ShapesOverlayDebugger();
+   
         // Kenny Debug
-        public bool kennyDebug = true;
+        public bool kennyDebug = false;
 
-        //--Ryan changed dimensions
         //Game window dimensions
         public const int gameWidth = 1000;
         public const int gameHeight = 708;
         public const bool isFullScreen = false;
 
-        //Layout: Display Interface
-        Texture2D interfacelayer;
-        Vector2 layerPos;
+        //User interface (FrameBorder layer) 
+        Texture2D UI_FrameLayer;
+        Vector2 UI_FrameLayerPosition;
+        Vector2 kinectFrameOffset;
 
         //Sprite Font: Display font on the screen
         SpriteFont font;
@@ -212,23 +218,29 @@ namespace AStarLearner
         {
             foreach (Joint joint in joints)
             {
+                //DEBUGGING STUFF
+                if (joint.ID == JointID.HipCenter)
+                {
+                     Vector2 jointPosition = joint.GetScreenPosition(kinectRuntime, 640, 480);
+                     this.shapeDebugger.setPosition((jointPosition + kinectFrameOffset));
+                }
 
                 if (joint.ID == JointID.HandRight)
                 {
                     // Place solution object replica on the person's hand
-                    Vector2 jointPosition = joint.GetScreenPosition(kinectRuntime, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
+                    Vector2 jointPosition = joint.GetScreenPosition(kinectRuntime, 640,480);
                     //solutionObjectReplica.Position = jointPosition;
                     if (kennyDebug)
                     {
                         if (kennyDebug)
                         {
-                            updateHands("right", jointPosition);
+                            updateHands("right", (jointPosition + kinectFrameOffset));
                         }
                     }
 
-                    if (!questionIsCorrect && checkSolutionIntersection(jointPosition))
+                    if (!questionIsCorrect && checkSolutionIntersection((jointPosition + kinectFrameOffset)))
                     {
-                        correctChoice(jointPosition);
+                        correctChoice((jointPosition + kinectFrameOffset));
                     }
                     else
                     {
@@ -240,19 +252,20 @@ namespace AStarLearner
                 if (joint.ID == JointID.HandLeft)
                 {
                     // Place solution object replica on the person's hand
-                    Vector2 jointPosition = joint.GetScreenPosition(kinectRuntime, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
+                    Vector2 jointPosition = joint.GetScreenPosition(kinectRuntime, 640, 480);
+ 
                     //solutionObjectReplica.Position = jointPosition;
 
                     if (kennyDebug)
                     {
-                        updateHands("left", jointPosition);
+                        updateHands("left", (jointPosition + kinectFrameOffset));
                     }
 
-                    if (!questionIsCorrect && checkSolutionIntersection(jointPosition))
+                    if (!questionIsCorrect && checkSolutionIntersection((jointPosition + kinectFrameOffset)))
                     {
 
                         particleEffect.Trigger(jointPosition); //To-do:Victor Please help to confirm if this can be remove as particleEffect.Trigger is already called in correctChoice
-                        correctChoice(jointPosition);
+                        correctChoice((jointPosition + kinectFrameOffset));
                     }
                     else
                     {
@@ -337,6 +350,7 @@ namespace AStarLearner
 
         protected override void Initialize()
         {
+           
             kinectRuntime = new Runtime();
             kinectRuntime.Initialize(RuntimeOptions.UseColor | RuntimeOptions.UseSkeletalTracking | RuntimeOptions.UseDepthAndPlayerIndex);
             kinectRuntime.VideoStream.Open(ImageStreamType.Video, 2, ImageResolution.Resolution640x480, ImageType.Color);
@@ -345,6 +359,10 @@ namespace AStarLearner
             kinectRuntime.SkeletonFrameReady += SkeletonFrameReady;
 
             particleEffect.Initialise();
+          
+            // Init Debugger overlay
+            skeletonDebugger = new SkeletonOverlayDebugger(this.kinectRuntime);
+
 
             base.Initialize();
         }
@@ -361,6 +379,7 @@ namespace AStarLearner
             spriteBatch = new SpriteBatch(GraphicsDevice);
             kinectRGBVideo.Texture = new Texture2D(GraphicsDevice, gameWidth, gameHeight, false, SurfaceFormat.Color);
             kinectRGBVideo.Position = new Vector2(183, 228); //Ryan --- changed position
+            this.kinectFrameOffset = new Vector2(183, 228); 
 
             // Game Set inits.
             initGameSetList();
@@ -380,13 +399,16 @@ namespace AStarLearner
             particleEffect.Initialise();
 
             //Handling Interface Layer on the screen
-            interfacelayer = Content.Load<Texture2D>("frame");
-            layerPos = new Vector2(0, 0);
+            UI_FrameLayer = Content.Load<Texture2D>("frame");
+            UI_FrameLayerPosition = new Vector2(0, 0);
 
             //Handling Font Sprite on the screen
             font = Content.Load<SpriteFont>("SpriteFont");
             fontPos = new Vector2(535, 25);
 
+            // Debug inits
+            shapeDebugger.init(GraphicsDevice);
+            
             /*
             //skeleton right hand
             GameTextureInstance texture = GameTextureInstance.CreateBlank(GraphicsDevice, 20, 20);
@@ -424,15 +446,15 @@ namespace AStarLearner
             hotSpots.Add(texture);
 
             //debug textures
-            GameTextureInstance rectTexture = GameTextureInstance.CreateBlank(GraphicsDevice, 80, 80);
-            rectTexture.Alpha = 0.3f;
-            rectTexture.Color = Color.HotPink;
-            debugSpots.Add(rectTexture);
+            GameTextureInstance texture = GameTextureInstance.CreateBlank(GraphicsDevice, 80, 80);
+            texture.Alpha = 0.3f;
+            texture.Color = Color.HotPink;
+            debugSpots.Add(texture);
 
-            rectTexture = GameTextureInstance.CreateBlank(GraphicsDevice, 80, 80);
-            rectTexture.Alpha = 0.3f;
-            rectTexture.Color = Color.HotPink;
-            debugSpots.Add(rectTexture);
+            texture = GameTextureInstance.CreateBlank(GraphicsDevice, 80, 80);
+            texture.Alpha = 0.3f;
+            texture.Color = Color.HotPink;
+            debugSpots.Add(texture);
  
 
             ResetSquareColors();
@@ -464,6 +486,8 @@ namespace AStarLearner
                     gameLogic(data.Joints);
                 }
             }
+
+            skeletonDebugger.SkeletonFrameReady(sender, e);
         }
 
 
@@ -503,10 +527,14 @@ namespace AStarLearner
         {
 
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            spriteBatch.Begin();
+ 
+            spriteBatch.Begin();  // Begin Sprite batch 
+            
+            // Draw textures from the Kinect Camera Stream
             kinectRGBVideo.Draw(spriteBatch);
-            spriteBatch.Draw(interfacelayer, layerPos, Color.White);
+            
+            // Draw UI frame Border 
+            spriteBatch.Draw(UI_FrameLayer, UI_FrameLayerPosition, Color.White);
 
             // Draw string
             string output = "" + this.score;
@@ -516,7 +544,18 @@ namespace AStarLearner
             Vector2 fontOrigin = font.MeasureString(output) / 2;
             // Draw string
             spriteBatch.DrawString(font, output, fontPos, Color.Black, 0, fontOrigin, 1.5f, SpriteEffects.None, 0.5f);
-            spriteBatch.End();
+
+            ////////////////////////// Deubg Overlays ///////////////////////////////////
+            // Note: kinectRuntime.VideoStream.Width / Height is equivalent to the resolution set in init function
+            this.skeletonDebugger.DrawSkeletonOverlay_XNA(spriteBatch,
+                new LineBrush(GraphicsDevice, 1), this.kinectFrameOffset, 
+                new Vector2(kinectRuntime.VideoStream.Width, kinectRuntime.VideoStream.Height), 
+                Color.Red);
+ 
+            // this.shapeDebugger.drawShapeOverlay(spriteBatch);
+
+
+            spriteBatch.End();   // End Sprite batch 
 
             particleRenderer.RenderEffect(particleEffect);
 
