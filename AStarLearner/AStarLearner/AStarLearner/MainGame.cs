@@ -18,12 +18,21 @@ namespace AStarLearner
 {
     public class MainGame : Game
     {
+
         // Debugger overlay
         SkeletonOverlayDebugger skeletonDebugger;
         ShapesOverlayDebugger shapeDebugger = new ShapesOverlayDebugger();
    
         // Kenny Debug
         public bool kennyDebug = false;
+
+        private readonly List<GameTextureInstance> hotSpots = new List<GameTextureInstance>();
+        private readonly List<GameTextureInstance> skeletonSpots = new List<GameTextureInstance>();
+        private readonly List<GameTextureInstance> debugSpots = new List<GameTextureInstance>();
+       
+        // XNA game engine variables 
+        private readonly GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
 
         //Game window dimensions
         public const int gameWidth = 1000;
@@ -47,20 +56,13 @@ namespace AStarLearner
         private const float HotSpotAlpha = 0.5f;
         private const int JointIntersectionSize = 80;
 
-        private readonly GraphicsDeviceManager graphics;
-        private SpriteBatch spriteBatch;
-
         private Runtime kinectRuntime;
+        private readonly GameTextureInstance kinectRGBVideo = new GameTextureInstance();
 
         GameSFX correct_snd;
-
         ParticleEffect particleEffect;
         Renderer particleRenderer;
 
-        private readonly GameTextureInstance kinectRGBVideo = new GameTextureInstance();
-        private readonly List<GameTextureInstance> hotSpots = new List<GameTextureInstance>();
-        private readonly List<GameTextureInstance> skeletonSpots = new List<GameTextureInstance>();
-        private readonly List<GameTextureInstance> debugSpots = new List<GameTextureInstance>();
 
         // Each gameSet would have 1 Correct Solution Object and multiple selection Object
         // The correct solution object should be placed in the first index.
