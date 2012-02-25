@@ -9,6 +9,8 @@
 
 #region Using Statements
 using AStarLearner;
+using AStarLearner.DebugHelper;
+using AStarLearner.InteractiveElements;
 using GameStateManagement;
 using Microsoft.Research.Kinect.Nui;
 using Microsoft.Xna.Framework;
@@ -17,6 +19,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Neat.Graphics;
 using ProjectMercury;
 using ProjectMercury.Emitters;
 using ProjectMercury.Modifiers;
@@ -38,6 +41,8 @@ namespace GameStateManagementSample
     class GameplayScreen : GameScreen
     {
         #region Initialization
+
+        private bool debuggerOn = false;
 
         private GameSFX correct_snd;
         private ParticleEffect particleEffect;
@@ -88,9 +93,8 @@ namespace GameStateManagementSample
                 true);
         }
         #endregion
-
-
-        #region Game
+        
+        #region Game Graphic and Game Set initialization
 
         /// <summary>
         /// Load graphics content for the game.
@@ -145,6 +149,13 @@ namespace GameStateManagementSample
                 // timing mechanism that we have just finished a very long frame, and that
                 // it should not try to catch up.
                 ScreenManager.Game.ResetElapsedTime();
+
+                // Debugger
+                if (debuggerOn)
+                {
+                    skeletonDebugger = new SkeletonOverlayDebugger(this.kinectRuntime);
+                    shapeDebugger.init(ScreenManager.GraphicsDevice);
+                }
             }
 
 
@@ -159,7 +170,6 @@ namespace GameStateManagementSample
         private void SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
         {
             SkeletonFrame skeletonFrame = e.SkeletonFrame;
-            // ResetSquareColors();
 
             foreach (SkeletonData data in skeletonFrame.Skeletons)
             {
@@ -168,6 +178,12 @@ namespace GameStateManagementSample
                     // Game Logic
                     gameLogic(data.Joints);
                 }
+            }
+
+            //Debugger
+            if (debuggerOn)
+            {
+                skeletonDebugger.SkeletonFrameReady(sender, e);
             }
         }
 
@@ -187,7 +203,7 @@ namespace GameStateManagementSample
 
         #endregion
 
-        #region GameInitHelper
+        #region Game Init Helper
         /// <summary>
         /// This function would randomly select and set for us the correct solution  
         /// and pick random "non correct" red - herrings. 
@@ -202,7 +218,15 @@ namespace GameStateManagementSample
         }
         #endregion
 
-        #region GameLogicHelper
+        #region Debug Initialization
+        SkeletonOverlayDebugger skeletonDebugger;
+        ShapesOverlayDebugger shapeDebugger = new ShapesOverlayDebugger();
+        private readonly List<GameTextureInstance> hotSpots = new List<GameTextureInstance>();
+        private readonly List<GameTextureInstance> skeletonSpots = new List<GameTextureInstance>();
+        private readonly List<GameTextureInstance> debugSpots = new List<GameTextureInstance>();
+        #endregion
+
+        #region Game Logic Helper
 
         public void destroyGameSet()
         {
@@ -323,17 +347,27 @@ namespace GameStateManagementSample
             return choice;
         }
 
+        // Get the correcet joint position corrected with Offset for current UI
         public Vector2 getScreenPosition(Joint joint)
         {
             return (joint.GetScreenPosition(kinectRuntime, 640, 480) + UI_KinectFrameOffset);
         }
         #endregion
 
-        #region GameLogic
+        #region Game Logic
         public void gameLogic(JointsCollection joints)
         {
             foreach (Joint joint in joints)
             {
+                //Debugger
+                if (debuggerOn)
+                {
+                    if (joint.ID == JointID.HipCenter)
+                    {
+                        Vector2 jointPosition = getScreenPosition(joint);
+                        this.shapeDebugger.setPosition((jointPosition));
+                    }
+                }
 
                 if (joint.ID == JointID.HandRight || joint.ID == JointID.HandLeft)
                 {
@@ -418,6 +452,16 @@ namespace GameStateManagementSample
             string output = "" + this.score;
             Vector2 fontOrigin = UI_Font.MeasureString(output) / 2;
             spriteBatch.DrawString(UI_Font, output, UI_FontPosition, Color.Black, 0, fontOrigin, 1.5f, SpriteEffects.None, 0.5f);
+
+            //Debugger
+            if (debuggerOn)
+            {
+                skeletonDebugger.DrawSkeletonOverlay_XNA(spriteBatch,
+                                                              new LineBrush(ScreenManager.GraphicsDevice, 1),
+                                                              UI_KinectFrameOffset,
+                                                              new Vector2(kinectRuntime.VideoStream.Width, kinectRuntime.VideoStream.Height),
+                                                              Color.Red);
+            }
             spriteBatch.End();
 
             particleRenderer.RenderEffect(particleEffect);
