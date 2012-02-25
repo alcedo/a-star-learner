@@ -7,9 +7,9 @@
 //-----------------------------------------------------------------------------
 #endregion
 
-using System;
 using GameStateManagement;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace GameStateManagementSample
 {
@@ -31,10 +31,12 @@ namespace GameStateManagementSample
             Content.RootDirectory = "Content";
             const int gameWidth = 1000;
             const int gameHeight = 700;
+            const bool isFullScreen = false;
 
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferHeight = gameHeight;
             graphics.PreferredBackBufferWidth = gameWidth;
+            this.graphics.IsFullScreen = isFullScreen;
 
             TargetElapsedTime = TimeSpan.FromTicks(333333);
 
@@ -63,7 +65,7 @@ namespace GameStateManagementSample
             // screenManager.AddScreen(new MainMenuScreen(graphics.PreferredBackBufferWidth, Content, graphics), null);
 
             // Development purpose
-            screenManager.AddScreen(new GameplayScreen(graphics.PreferredBackBufferWidth, Content, graphics), null);
+            screenManager.AddScreen(new GameplayScreen(graphics.PreferredBackBufferWidth, Content), null);
         }
 
         /// <summary>

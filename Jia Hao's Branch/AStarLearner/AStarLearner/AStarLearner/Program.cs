@@ -1,5 +1,5 @@
-using System;
 using GameStateManagementSample;
+using System;
 
 namespace AStarLearner
 {
@@ -27,12 +27,12 @@ namespace AStarLearner
 
             using (MainGame test = new MainGame())
             {
-                test.Run();
+                // test.Run();
             }
 
             using (GameStateManagementGame game = new GameStateManagementGame())
             {
-               //game.Run();
+               game.Run();
             }
 		 
 			
