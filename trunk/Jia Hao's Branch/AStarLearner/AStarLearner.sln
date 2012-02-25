@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AStarLearner", "AStarLearner\AStarLearner\AStarLearner.csproj", "{C3E91E91-5A5D-47EE-8ED6-73047D40C37A}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "AStarLearnerContent", "AStarLearner\AStarLearnerContent\AStarLearnerContent.contentproj", "{B80E5476-B46F-4F96-A193-8E4A77425D2D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AStarLearnerContent", "AStarLearner\AStarLearnerContent\AStarLearnerContent.contentproj", "{B80E5476-B46F-4F96-A193-8E4A77425D2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
