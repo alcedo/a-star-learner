@@ -135,6 +135,7 @@
     <Compile Include="GameSprite.cs" />
     <Compile Include="GameStateManagementGame.cs" />
     <Compile Include="GameTimer.cs" />
+    <Compile Include="GeometryHelper.cs" />
     <Compile Include="GestureRecognition.cs" />
     <Compile Include="HandTracer.cs" />
     <Compile Include="InputAction.cs" />
@@ -144,6 +145,8 @@
     <Compile Include="Kinect.cs" />
     <Compile Include="KinectExtensions.cs" />
     <Compile Include="Linear.cs" />
+    <Compile Include="LineBrush.cs" />
+    <Compile Include="LineSegment.cs" />
     <Compile Include="LoadingScreen.cs" />
     <Compile Include="MainGame.cs" />
     <Compile Include="MainMenuScreen.cs" />
@@ -152,6 +155,10 @@
     <Compile Include="MessageBoxScreen.cs" />
     <Compile Include="PauseMenuScreen.cs" />
     <Compile Include="PlayerIndexEventArgs.cs" />
+    <Compile Include="Polygon.cs" />
+    <Compile Include="Polygon_Experimental.cs" />
+    <Compile Include="Polygon_SAT.cs" />
+    <Compile Include="Polygon_Triangulator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
@@ -160,12 +167,15 @@
     <Compile Include="Quintic.cs" />
     <Compile Include="ScreenFactory.cs" />
     <Compile Include="ScreenManager.cs" />
+    <Compile Include="ShapesOverlayDebugger.cs" />
     <Compile Include="Sinusoidal.cs" />
+    <Compile Include="SkeletonOverlayDebugger.cs" />
     <Compile Include="SpriteManager.cs" />
     <Compile Include="StandardAudio.cs" />
     <Compile Include="tempClass.cs" />
     <Compile Include="TestDriver.cs" />
     <Compile Include="TextureInstance.cs" />
+    <Compile Include="Triangle.cs" />
     <Compile Include="Tweener.cs" />
     <Compile Include="Xact.cs" />
   </ItemGroup>
