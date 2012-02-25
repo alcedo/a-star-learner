@@ -38,8 +38,8 @@ namespace GameStateManagementSample
     class GameplayScreen : GameScreen
     {
         #region Constructor
+
         private int windowWidth;
-        private GraphicsDevice graphicDevice;
         private GameSFX correct_snd;
         private ParticleEffect particleEffect;
         private Renderer particleRenderer;
@@ -56,22 +56,31 @@ namespace GameStateManagementSample
 
         private const int JointIntersectionSize = 80;
 
-        //Question related variables
-        private int intervalBtwQuestion = 2000;
+        // Display Interface
+        Texture2D interfacelayer;
+        Vector2 layerPos;
+        SpriteFont font;
+        Vector2 fontPos;
+        int score;
+
+        // Question related variables
+        private int intervalBtwQuestion = 1500;
         private bool questionIsCorrect = false;
         private double intervalTime = 0;
 
         //Constructor
-        public GameplayScreen(int width, ContentManager content, GraphicsDeviceManager manager)
+        public GameplayScreen(int width, ContentManager content)
         {
+            TransitionOnTime = TimeSpan.FromSeconds(1.5);
+            TransitionOffTime = TimeSpan.FromSeconds(0.5);
+
+            pauseAction = new InputAction(
+                new Buttons[] { Buttons.Start, Buttons.Back },
+                new Keys[] { Keys.Escape },
+                true);
+            
             windowWidth = width;
             Content = content;
-            graphicDevice = manager.GraphicsDevice;
-            particleEffect = new ParticleEffect();
-            particleRenderer = new SpriteBatchRenderer
-            {
-                GraphicsDeviceService = manager
-            };
         }
         #endregion
 
@@ -98,20 +107,6 @@ namespace GameStateManagementSample
         #region Initialization
 
         /// <summary>
-        /// Constructor.
-        /// </summary>
-        public GameplayScreen()
-        {
-            TransitionOnTime = TimeSpan.FromSeconds(1.5);
-            TransitionOffTime = TimeSpan.FromSeconds(0.5);
-
-            pauseAction = new InputAction(
-                new Buttons[] { Buttons.Start, Buttons.Back },
-                new Keys[] { Keys.Escape },
-                true);
-        }
-
-        /// <summary>
         /// Load graphics content for the game.
         /// </summary>
         public override void Activate(bool instancePreserved)
@@ -132,6 +127,8 @@ namespace GameStateManagementSample
                 kinectRuntime.VideoFrameReady += VideoFrameReady;
                 kinectRuntime.SkeletonFrameReady += SkeletonFrameReady;
 
+                kinectRGBVideo.Position = new Vector2(183, 225);
+
                 // Game Set inits.
                 initGameSetList();
                 generateGameSet();
@@ -143,11 +140,21 @@ namespace GameStateManagementSample
                 GameMusic background = new GameMusic(Content.Load<Song>("background_music3"));
                 background.PlayLooping();
 
+                particleEffect = new ParticleEffect();
+                particleRenderer = new SpriteBatchRenderer
+                {
+                    GraphicsDeviceService = (IGraphicsDeviceService)ScreenManager.Game.Services.GetService(typeof(IGraphicsDeviceService))
+                };
                 particleRenderer.LoadContent(Content);
-
                 particleEffect = Content.Load<ParticleEffect>(("BasicExplosion"));
                 particleEffect.LoadContent(Content);
                 particleEffect.Initialise();
+
+                //Interface Layer
+                interfacelayer = Content.Load<Texture2D>("frame");
+                layerPos = new Vector2(0, 0);
+                font = Content.Load<SpriteFont>("SpriteFont");
+                fontPos = new Vector2(535, 22);
 
                 // once the load has finished, we use ResetElapsedTime to tell the game's
                 // timing mechanism that we have just finished a very long frame, and that
@@ -246,10 +253,10 @@ namespace GameStateManagementSample
             // GameSprite selectionSprite4 = new GameSprite(set1["yellow_ball"]  , 1, 1, 0, 0);
 
             // Store positions. These are namely 2 on the left, 2 on the right
-            gameObjectPosition.Add(new Vector2(0, xSpacing)); //top left 
-            gameObjectPosition.Add(new Vector2(0, solutionSprite.Height * 4)); // bottom left 
-            gameObjectPosition.Add(new Vector2(windowWidth - solutionSprite.Width, 0)); // top right 
-            gameObjectPosition.Add(new Vector2(windowWidth - solutionSprite.Width, solutionSprite.Height * 4)); //btm right
+            gameObjectPosition.Add(new Vector2(190, 235)); //top left 
+            gameObjectPosition.Add(new Vector2(190, 560)); // bottom left 
+            gameObjectPosition.Add(new Vector2(735, 235)); // top right 
+            gameObjectPosition.Add(new Vector2(735, 560)); //btm right 
 
             // Generate position placement choices randomly
             List<int> randPosn = new List<int>();
@@ -266,7 +273,7 @@ namespace GameStateManagementSample
             solutionObj.isSolutionObject = true;
 
             // Create a replica of the solution object for question display 
-            solutionObjectReplica = new GameObject(solutionSprite, windowWidth / 2, 0);
+            solutionObjectReplica = new GameObject(solutionSprite, 500, 125);
 
             GameObject selectionObject1 = new GameObject(selectionSprite1, gameObjectPosition[randPosn[1]]);
             GameObject selectionObject2 = new GameObject(selectionSprite2, gameObjectPosition[randPosn[2]]);
@@ -297,6 +304,7 @@ namespace GameStateManagementSample
             questionIsCorrect = true;
             destroyGameSet();
             correct_snd.MultiPlay();
+            this.score++;
         }
 
         private void wrongChoice()
@@ -341,7 +349,7 @@ namespace GameStateManagementSample
                 if (joint.ID == JointID.HandRight)
                 {
                     // Place solution object replica on the person's hand
-                    Vector2 jointPosition = joint.GetScreenPosition(kinectRuntime, graphicDevice.Viewport.Width, graphicDevice.Viewport.Height);
+                    Vector2 jointPosition = joint.GetScreenPosition(kinectRuntime, ScreenManager.GraphicsDevice.Viewport.Width, ScreenManager.GraphicsDevice.Viewport.Height);
                     //solutionObjectReplica.Position = jointPosition;
 
                     if (!questionIsCorrect && checkSolutionIntersection(jointPosition))
@@ -358,7 +366,7 @@ namespace GameStateManagementSample
                 if (joint.ID == JointID.HandLeft)
                 {
                     // Place solution object replica on the person's hand
-                    Vector2 jointPosition = joint.GetScreenPosition(kinectRuntime, graphicDevice.Viewport.Width, graphicDevice.Viewport.Height);
+                    Vector2 jointPosition = joint.GetScreenPosition(kinectRuntime, ScreenManager.GraphicsDevice.Viewport.Width, ScreenManager.GraphicsDevice.Viewport.Height);
                     //solutionObjectReplica.Position = jointPosition;
 
                     if (!questionIsCorrect && checkSolutionIntersection(jointPosition))
@@ -434,7 +442,15 @@ namespace GameStateManagementSample
             
             spriteBatch.Begin();
             kinectRGBVideo.Draw(spriteBatch);
+            spriteBatch.Draw(interfacelayer, layerPos, Color.White);
+
+            //Printing out question, score
+            string output = "" + this.score;
+            Vector2 fontOrigin = font.MeasureString(output) / 2;
+            spriteBatch.DrawString(font, output, fontPos, Color.Black, 0, fontOrigin, 1.5f, SpriteEffects.None, 0.5f);
             spriteBatch.End();
+
+            particleRenderer.RenderEffect(particleEffect);
 
             if (IsActive)
             {
