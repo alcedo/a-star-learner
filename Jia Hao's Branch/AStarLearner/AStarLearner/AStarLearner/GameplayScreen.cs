@@ -42,7 +42,7 @@ namespace GameStateManagementSample
     {
         #region Initialization
 
-        private bool debuggerOn = false;
+        private bool debuggerOn = true;
 
         private GameSFX correct_snd;
         private ParticleEffect particleEffect;
@@ -68,8 +68,11 @@ namespace GameStateManagementSample
         Vector2 UI_FontPosition;
         Vector2 UI_KinectFrameOffset;
 
+        //Interactive Elements
+        TextAnimator textAnimator;
+
         // Question related variables
-        private int INTERVAL_BTW_QUESTIONS = 1500;
+        private int INTERVAL_BTW_QUESTIONS = 2000;
         private bool questionIsCorrect = false;
         private double intervalTime = 0;
 
@@ -145,6 +148,9 @@ namespace GameStateManagementSample
                 UI_Font = content.Load<SpriteFont>("SpriteFont");
                 UI_FontPosition = new Vector2(535, 22);
 
+                //Interactive Elements
+                textAnimator = new TextAnimator(content.Load<SpriteFont>("SpriteFont"));
+
                 // once the load has finished, we use ResetElapsedTime to tell the game's
                 // timing mechanism that we have just finished a very long frame, and that
                 // it should not try to catch up.
@@ -153,7 +159,7 @@ namespace GameStateManagementSample
                 // Debugger
                 if (debuggerOn)
                 {
-                    skeletonDebugger = new SkeletonOverlayDebugger(this.kinectRuntime);
+                    skeletonDebugger = new SkeletonOverlayDebugger(kinectRuntime);
                     shapeDebugger.init(ScreenManager.GraphicsDevice);
                 }
             }
@@ -312,7 +318,8 @@ namespace GameStateManagementSample
             questionIsCorrect = true;
             destroyGameSet();
             correct_snd.MultiPlay();
-            this.score++;
+            score++;
+            textAnimator.Start();
         }
 
         private void wrongChoice()
@@ -365,7 +372,7 @@ namespace GameStateManagementSample
                     if (joint.ID == JointID.HipCenter)
                     {
                         Vector2 jointPosition = getScreenPosition(joint);
-                        this.shapeDebugger.setPosition((jointPosition));
+                        shapeDebugger.setPosition((jointPosition));
                     }
                 }
 
@@ -428,8 +435,11 @@ namespace GameStateManagementSample
                 // Game Logic
                 if (questionIsCorrect && intervalTimeUp(gameTime))
                 {
+                    textAnimator.Stop();
                     generateGameSet();
                 }
+
+                textAnimator.updateTweener(gameTime);
             }
         }
 
@@ -449,7 +459,7 @@ namespace GameStateManagementSample
             spriteBatch.Draw(UI_FrameLayer, UI_FrameLayerPosition, Color.White);
 
             //Printing out question, score
-            string output = "" + this.score;
+            string output = "" + score;
             Vector2 fontOrigin = UI_Font.MeasureString(output) / 2;
             spriteBatch.DrawString(UI_Font, output, UI_FontPosition, Color.Black, 0, fontOrigin, 1.5f, SpriteEffects.None, 0.5f);
 
@@ -457,7 +467,7 @@ namespace GameStateManagementSample
             if (debuggerOn)
             {
                 skeletonDebugger.DrawSkeletonOverlay_XNA(spriteBatch,
-                                                              new LineBrush(ScreenManager.GraphicsDevice, 1),
+                                                              new LineBrush(ScreenManager.GraphicsDevice, 3),
                                                               UI_KinectFrameOffset,
                                                               new Vector2(kinectRuntime.VideoStream.Width, kinectRuntime.VideoStream.Height),
                                                               Color.Red);
@@ -465,6 +475,11 @@ namespace GameStateManagementSample
             spriteBatch.End();
 
             particleRenderer.RenderEffect(particleEffect);
+
+            textAnimator.DrawText("Good Job!~", spriteBatch,
+                      new Vector2(ScreenManager.Game.Window.ClientBounds.Width / 2, ScreenManager.Game.Window.ClientBounds.Height / 3),
+                      new Vector2(ScreenManager.Game.Window.ClientBounds.Width / 2, ScreenManager.Game.Window.ClientBounds.Height - 80),
+                      2.0f);
 
             if (IsActive)
             {
