@@ -165,15 +165,14 @@ namespace GameStateManagementSample
 
         private void SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
         {
-
             SkeletonFrame skeletonFrame = e.SkeletonFrame;
-           //  ResetSquareColors();
+            // ResetSquareColors();
 
             foreach (SkeletonData data in skeletonFrame.Skeletons)
             {
                 if (data.TrackingState == SkeletonTrackingState.Tracked)
                 {
-                    // gameLogic(data.Joints);
+                    gameLogic(data.Joints);
                 }
             }
         }
