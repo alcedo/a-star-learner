@@ -39,7 +39,6 @@ namespace GameStateManagementSample
     {
         #region Constructor
 
-        private int windowWidth;
         private GameSFX correct_snd;
         private ParticleEffect particleEffect;
         private Renderer particleRenderer;
@@ -57,8 +56,8 @@ namespace GameStateManagementSample
         private const int JointIntersectionSize = 80;
 
         // Display Interface
-        Texture2D interfacelayer;
-        Vector2 layerPos;
+        Texture2D UI_FrameLayer;
+        Vector2 UI_FrameLayerPosition;
         SpriteFont font;
         Vector2 fontPos;
         int score;
@@ -69,7 +68,7 @@ namespace GameStateManagementSample
         private double intervalTime = 0;
 
         //Constructor
-        public GameplayScreen(int width, ContentManager content)
+        public GameplayScreen()
         {
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
@@ -78,24 +77,12 @@ namespace GameStateManagementSample
                 new Buttons[] { Buttons.Start, Buttons.Back },
                 new Keys[] { Keys.Escape },
                 true);
-            
-            windowWidth = width;
-            Content = content;
         }
         #endregion
 
         #region Fields
 
-        ContentManager content;
-        SpriteFont gameFont;
-
-        Vector2 playerPosition = new Vector2(100, 100);
-        Vector2 enemyPosition = new Vector2(100, 100);
-
-        Random random = new Random();
-
         float pauseAlpha;
-
         InputAction pauseAction;
 
         // Kinect Vars
@@ -113,10 +100,8 @@ namespace GameStateManagementSample
         {
             if (!instancePreserved)
             {
-                if (content == null)
-                    content = new ContentManager(ScreenManager.Game.Services, "Content");
-
-                gameFont = content.Load<SpriteFont>("gamefont");
+                if (Content == null)
+                    Content = new ContentManager(ScreenManager.Game.Services, "Content");
 
                 kinectRGBVideo.Texture = new Texture2D(ScreenManager.GraphicsDevice, 640, 480, false, SurfaceFormat.Color);
 
@@ -151,8 +136,8 @@ namespace GameStateManagementSample
                 particleEffect.Initialise();
 
                 //Interface Layer
-                interfacelayer = Content.Load<Texture2D>("frame");
-                layerPos = new Vector2(0, 0);
+                UI_FrameLayer = Content.Load<Texture2D>("frame");
+                UI_FrameLayerPosition = new Vector2(0, 0);
                 font = Content.Load<SpriteFont>("SpriteFont");
                 fontPos = new Vector2(535, 22);
 
@@ -197,7 +182,7 @@ namespace GameStateManagementSample
         /// </summary>
         public override void Unload()
         {
-            content.Unload();
+            Content.Unload();
         }
 
         #endregion
@@ -233,7 +218,6 @@ namespace GameStateManagementSample
             solutionObjectReplica = null;
             currentGameSet.Clear();
             gameObjectPosition.Clear();
-            int xSpacing = 5;
 
             var set = Content.LoadContent<Texture2D>("Level1\\" + getRandomGameSet());
 
@@ -442,7 +426,7 @@ namespace GameStateManagementSample
             
             spriteBatch.Begin();
             kinectRGBVideo.Draw(spriteBatch);
-            spriteBatch.Draw(interfacelayer, layerPos, Color.White);
+            spriteBatch.Draw(UI_FrameLayer, UI_FrameLayerPosition, Color.White);
 
             //Printing out question, score
             string output = "" + this.score;

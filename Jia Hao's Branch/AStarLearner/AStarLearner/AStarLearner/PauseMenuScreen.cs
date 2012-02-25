@@ -24,13 +24,11 @@ namespace GameStateManagementSample
         #region Initialization
 
         private int windowWidth;
-        private ContentManager Content;
-        private GraphicsDeviceManager graphicDeviceManager;
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        public PauseMenuScreen(int width, ContentManager content, GraphicsDeviceManager manager)
+        public PauseMenuScreen(int width)
             : base("Paused")
         {
             // Create our menu entries.
@@ -47,8 +45,6 @@ namespace GameStateManagementSample
 
             //Init for gameplay
             windowWidth = width;
-            Content = content;
-            graphicDeviceManager = manager;
         }
 
 
@@ -80,7 +76,7 @@ namespace GameStateManagementSample
         void ConfirmQuitMessageBoxAccepted(object sender, PlayerIndexEventArgs e)
         {
             LoadingScreen.Load(ScreenManager, false, null, new BackgroundScreen(),
-                                                           new MainMenuScreen(windowWidth, Content, graphicDeviceManager));
+                                                           new MainMenuScreen());
         }
 
 

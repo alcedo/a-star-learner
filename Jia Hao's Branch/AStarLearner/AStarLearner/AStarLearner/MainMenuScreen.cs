@@ -23,12 +23,11 @@ namespace GameStateManagementSample
         #region Initialization
 
         private int windowWidth;
-        private ContentManager Content;
-        private GraphicsDeviceManager graphicDeviceManager;
+
         /// <summary>
         /// Constructor fills in the menu contents.
         /// </summary>
-        public MainMenuScreen(int width, ContentManager content, GraphicsDeviceManager manager)
+        public MainMenuScreen()
             : base("Main Menu")
         {
             // Create our menu entries.
@@ -45,11 +44,6 @@ namespace GameStateManagementSample
             MenuEntries.Add(playGameMenuEntry);
             MenuEntries.Add(optionsMenuEntry);
             MenuEntries.Add(exitMenuEntry);
-
-            //Init for gameplay
-            windowWidth = width; 
-            Content = content;
-            graphicDeviceManager = manager;
         }
 
 
@@ -64,7 +58,7 @@ namespace GameStateManagementSample
         void PlayGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
             LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
-                               new GameplayScreen(windowWidth, Content));
+                               new GameplayScreen());
         }
 
 

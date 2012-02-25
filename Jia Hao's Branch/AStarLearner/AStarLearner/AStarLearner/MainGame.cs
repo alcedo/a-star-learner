@@ -119,7 +119,6 @@ namespace AStarLearner
             solutionObjectReplica = null;
             currentGameSet.Clear();
             gameObjectPosition.Clear();
-            int xSpacing = 5;
 
             var set = Content.LoadContent<Texture2D>("Level1\\" + getRandomGameSet());
             
