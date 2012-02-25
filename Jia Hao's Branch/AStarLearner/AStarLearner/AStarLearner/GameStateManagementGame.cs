@@ -60,7 +60,7 @@ namespace GameStateManagementSample
             screenManager.AddScreen(new BackgroundScreen(), null);
 
             // Add Main Menu Screen
-            screenManager.AddScreen(new MainMenuScreen(), null);
+            screenManager.AddScreen(new MainMenuScreen(Window.ClientBounds.Width, Content, graphics), null);
         }
 
         /// <summary>
@@ -73,7 +73,5 @@ namespace GameStateManagementSample
             // The real drawing happens inside the screen manager component.
             base.Draw(gameTime);
         }
-
-
     }
 }
