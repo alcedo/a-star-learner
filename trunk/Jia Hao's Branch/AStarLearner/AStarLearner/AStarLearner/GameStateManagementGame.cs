@@ -29,8 +29,8 @@ namespace GameStateManagementSample
         public GameStateManagementGame()
         {
             Content.RootDirectory = "Content";
-            const int gameWidth = 640;
-            const int gameHeight = 480;
+            const int gameWidth = 1000;
+            const int gameHeight = 700;
 
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferHeight = gameHeight;

@@ -16,14 +16,22 @@ namespace AStarLearner
 {
     public class MainGame : Game
     {
-        
-        public const int gameWidth = 640;
-        public const int gameHeight = 480;
 
-        //public const int gameWidth = 1280;
-        //public const int gameHeight = 1024;
-
+        //--Ryan changed dimensions
+        //Game window dimensions
+        public const int gameWidth = 1000;
+        public const int gameHeight = 700;
         public const bool isFullScreen = false;
+
+        //Layout: Display Interface
+        Texture2D interfacelayer;
+        Vector2 layerPos;
+
+        //Sprite Font: Display font on the screen
+        SpriteFont font;
+        Vector2 fontPos;
+        int score;
+
 
         public Random rand = new Random((int)DateTime.Now.Ticks);
 
@@ -128,17 +136,16 @@ namespace AStarLearner
             GameSprite selectionSprite1 = new GameSprite(set[contentName[contentRand[1]]], 1, 1, 0, 0);
             GameSprite selectionSprite2 = new GameSprite(set[contentName[contentRand[2]]], 1, 1, 0, 0);
             GameSprite selectionSprite3 = new GameSprite(set[contentName[contentRand[3]]], 1, 1, 0, 0);
-            // GameSprite selectionSprite4 = new GameSprite(set1["yellow_ball"]  , 1, 1, 0, 0);
 
+            //---Ryan change the cooordinates 
             // Store positions. These are namely 2 on the left, 2 on the right
-            gameObjectPosition.Add(new Vector2(0, xSpacing)); //top left 
-            gameObjectPosition.Add(new Vector2(0, solutionSprite.Height * 4)); // bottom left 
-            gameObjectPosition.Add(new Vector2(Window.ClientBounds.Width - solutionSprite.Width, 0)); // top right 
-            gameObjectPosition.Add(new Vector2(Window.ClientBounds.Width - solutionSprite.Width, solutionSprite.Height * 4)); //btm right
+            gameObjectPosition.Add(new Vector2(190, 235)); //top left 
+            gameObjectPosition.Add(new Vector2(190, 560)); // bottom left 
+            gameObjectPosition.Add(new Vector2(735, 235)); // top right 
+            gameObjectPosition.Add(new Vector2(735, 560)); //btm right 
 
             // Generate position placement choices randomly
             List<int> randPosn = new List<int>();
-            
          
             while (randPosn.Count != gameObjectPosition.Count)
             {
@@ -152,7 +159,7 @@ namespace AStarLearner
             solutionObj.isSolutionObject = true;
             
             // Create a replica of the solution object for display purposes only 
-            solutionObjectReplica = new GameObject(solutionSprite, Window.ClientBounds.Width / 2, 0);
+            solutionObjectReplica = new GameObject(solutionSprite, 500, 125);
 
             // left hand side
             GameObject selectionObject1 = new GameObject(selectionSprite1, gameObjectPosition[randPosn[1]]);
@@ -166,7 +173,6 @@ namespace AStarLearner
             currentGameSet.Add(selectionObject1);
             currentGameSet.Add(selectionObject2);
             currentGameSet.Add(selectionObject3);             
-
             return currentGameSet;
         }
 
@@ -228,7 +234,8 @@ namespace AStarLearner
         {
             particleEffect.Trigger(pos); //To-do:Kenny particleEffect.Trigger position to be at where the object is instead of collision
             generateGameSet(); //To-do:Kenny give a second or two of pause before the next set comes in
-            correct_snd.MultiPlay();           
+            correct_snd.MultiPlay();
+            this.score++; //updating the score 
         }
 
         private void wrongChoice()
@@ -283,6 +290,7 @@ namespace AStarLearner
             // Rendering inits. 
             spriteBatch = new SpriteBatch(GraphicsDevice);
             kinectRGBVideo.Texture = new Texture2D(GraphicsDevice, gameWidth, gameHeight, false, SurfaceFormat.Color);
+            kinectRGBVideo.Position = new Vector2(183, 225);
             
             // Game Set inits.
             initGameSetList();
@@ -296,10 +304,17 @@ namespace AStarLearner
             background.PlayLooping();
 
             particleRenderer.LoadContent(Content);
-
             particleEffect = Content.Load<ParticleEffect>(("BasicExplosion"));
             particleEffect.LoadContent(Content);
             particleEffect.Initialise();
+
+            //Handling Interface Layer on the screen
+            interfacelayer = Content.Load<Texture2D>("frame");
+            layerPos = new Vector2(0, 0);
+
+            //Handling Font Sprite on the screen
+            font = Content.Load<SpriteFont>("SpriteFont");
+            fontPos = new Vector2(535, 22);
 
             /*
             //skeleton right hand
@@ -396,10 +411,20 @@ namespace AStarLearner
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-
             kinectRGBVideo.Draw(spriteBatch);
-            spriteBatch.End();
+            spriteBatch.Draw(interfacelayer, layerPos, Color.White);
 
+            // Draw string
+            string output = "" + this.score;
+            //string output = "" + intervalTime;
+
+            // Find the center of the string
+            Vector2 fontOrigin = font.MeasureString(output) / 2;
+
+            // Draw string
+            spriteBatch.DrawString(font, output, fontPos, Color.Black, 0, fontOrigin, 1.5f, SpriteEffects.None, 0.5f);
+            spriteBatch.End();
+            
             particleRenderer.RenderEffect(particleEffect);
 
             foreach (GameObject g in currentGameSet)
