@@ -52,12 +52,14 @@ namespace GameStateManagementSample
         private ContentManager Content;
         private List<GameObject> currentGameSet = new List<GameObject>();
         private GameObject solutionObjectReplica;
-
-        // We would have 6 possible MCQ choices, to be displayed. ie: 3 on the left and 3 on the right. 
-        // this list stores the coordinates to determine where the selection object should be placed. 
-        private List<Vector2> gameObjectPosition = new List<Vector2>();
+        private List<Vector2> gameObjectPosition = new List<Vector2>(); // Position of 6 choices
 
         private const int JointIntersectionSize = 80;
+
+        //Question related variables
+        private int intervalBtwQuestion = 2000;
+        private bool questionIsCorrect = false;
+        private double intervalTime = 0;
 
         //Constructor
         public GameplayScreen(int width, ContentManager content, GraphicsDeviceManager manager)
@@ -93,7 +95,7 @@ namespace GameStateManagementSample
 
         #endregion
 
-        #region KinectInitialization
+        #region Initialization
 
         /// <summary>
         /// Constructor.
@@ -108,7 +110,6 @@ namespace GameStateManagementSample
                 new Keys[] { Keys.Escape },
                 true);
         }
-
 
         /// <summary>
         /// Load graphics content for the game.
@@ -172,6 +173,7 @@ namespace GameStateManagementSample
             {
                 if (data.TrackingState == SkeletonTrackingState.Tracked)
                 {
+                    // Game Logic
                     gameLogic(data.Joints);
                 }
             }
@@ -194,7 +196,6 @@ namespace GameStateManagementSample
         #endregion
 
         #region GameInitHelper
-
         /// <summary>
         /// This function would randomly select and set for us the correct solution  
         /// and pick random "non correct" red - herrings. 
@@ -206,15 +207,22 @@ namespace GameStateManagementSample
             gameSetList.Add("Set3"); gameSetList.Add("Set8");
             gameSetList.Add("Set4"); gameSetList.Add("Set9");
             gameSetList.Add("Set5"); gameSetList.Add("Set10");
-
         }
-
         #endregion
 
         #region GameLogicHelper
-        // Remember to draw objects
+
+        public void destroyGameSet()
+        {
+            //solutionObjectReplica = null; // Find a way to remove solutionsprite as well
+            currentGameSet.Clear();
+            gameObjectPosition.Clear();
+            gameObjectPosition.Clear();
+        }
+
         public List<GameObject> generateGameSet()
         {
+            questionIsCorrect = false;
             solutionObjectReplica = null;
             currentGameSet.Clear();
             gameObjectPosition.Clear();
@@ -246,7 +254,6 @@ namespace GameStateManagementSample
             // Generate position placement choices randomly
             List<int> randPosn = new List<int>();
 
-
             while (randPosn.Count != gameObjectPosition.Count)
             {
                 int choice = rand.Next(0, gameObjectPosition.Count);
@@ -258,14 +265,11 @@ namespace GameStateManagementSample
             GameObject solutionObj = new GameObject(solutionSprite, gameObjectPosition[randPosn[0]]);
             solutionObj.isSolutionObject = true;
 
-            // Create a replica of the solution object for display purposes only 
+            // Create a replica of the solution object for question display 
             solutionObjectReplica = new GameObject(solutionSprite, windowWidth / 2, 0);
 
-            // left hand side
             GameObject selectionObject1 = new GameObject(selectionSprite1, gameObjectPosition[randPosn[1]]);
             GameObject selectionObject2 = new GameObject(selectionSprite2, gameObjectPosition[randPosn[2]]);
-
-            // right hand side 
             GameObject selectionObject3 = new GameObject(selectionSprite3, gameObjectPosition[randPosn[3]]);
 
             // Add to current game set 
@@ -290,7 +294,8 @@ namespace GameStateManagementSample
         private void correctChoice(Vector2 pos)
         {
             particleEffect.Trigger(pos); //To-do:Kenny particleEffect.Trigger position to be at where the object is instead of collision
-            generateGameSet(); //To-do:Kenny give a second or two of pause before the next set comes in
+            questionIsCorrect = true;
+            destroyGameSet();
             correct_snd.MultiPlay();
         }
 
@@ -328,7 +333,6 @@ namespace GameStateManagementSample
         #endregion
 
         #region GameLogic
-
         public void gameLogic(JointsCollection joints)
         {
             foreach (Joint joint in joints)
@@ -340,7 +344,7 @@ namespace GameStateManagementSample
                     Vector2 jointPosition = joint.GetScreenPosition(kinectRuntime, graphicDevice.Viewport.Width, graphicDevice.Viewport.Height);
                     //solutionObjectReplica.Position = jointPosition;
 
-                    if (checkSolutionIntersection(jointPosition))
+                    if (!questionIsCorrect && checkSolutionIntersection(jointPosition))
                     {
                         correctChoice(jointPosition);
                     }
@@ -357,7 +361,7 @@ namespace GameStateManagementSample
                     Vector2 jointPosition = joint.GetScreenPosition(kinectRuntime, graphicDevice.Viewport.Width, graphicDevice.Viewport.Height);
                     //solutionObjectReplica.Position = jointPosition;
 
-                    if (checkSolutionIntersection(jointPosition))
+                    if (!questionIsCorrect && checkSolutionIntersection(jointPosition))
                     {
                         correctChoice(jointPosition);
                     }
@@ -368,10 +372,23 @@ namespace GameStateManagementSample
                 }
             }
         }
+
+        private bool intervalTimeUp(GameTime gameTime)
+        {
+            bool intervalTimeUp = false;
+
+            intervalTime += (float)gameTime.ElapsedGameTime.Milliseconds;
+
+            if (intervalTime >= intervalBtwQuestion)
+            {
+                intervalTime = 0;
+                intervalTimeUp = true;
+            }
+            return intervalTimeUp;
+        }
         #endregion
 
         #region Update and Draw
-
 
         /// <summary>
         /// Updates the state of the game. This method checks the GameScreen.IsActive
@@ -391,12 +408,17 @@ namespace GameStateManagementSample
 
             if (IsActive)
             { 
-                // Game Update Logic here.
+                // Question related variables initialization
                 float SecondsPassed = (float)gameTime.ElapsedGameTime.TotalSeconds;
                 int totalGameTime = gameTime.TotalGameTime.Seconds;
                 particleEffect.Update(SecondsPassed);
-            }
 
+                // Game Logic
+                if (questionIsCorrect && intervalTimeUp(gameTime))
+                {
+                    generateGameSet();
+                }
+            }
         }
 
         /// <summary>
