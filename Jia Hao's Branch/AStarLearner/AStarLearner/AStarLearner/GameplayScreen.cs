@@ -37,7 +37,7 @@ namespace GameStateManagementSample
     /// </summary>
     class GameplayScreen : GameScreen
     {
-        #region Constructor
+        #region Initialization
 
         private GameSFX correct_snd;
         private ParticleEffect particleEffect;
@@ -48,24 +48,33 @@ namespace GameStateManagementSample
 
         // Each gameSet would have 1 Correct Solution Object and multiple selection Object
         // The correct solution object should be placed in the first index.
-        private ContentManager Content;
+        private ContentManager content;
         private List<GameObject> currentGameSet = new List<GameObject>();
         private GameObject solutionObjectReplica;
         private List<Vector2> gameObjectPosition = new List<Vector2>(); // Position of 6 choices
 
         private const int JointIntersectionSize = 80;
+        int score;
 
         // Display Interface
         Texture2D UI_FrameLayer;
         Vector2 UI_FrameLayerPosition;
-        SpriteFont font;
-        Vector2 fontPos;
-        int score;
+        SpriteFont UI_Font;
+        Vector2 UI_FontPosition;
+        Vector2 UI_KinectFrameOffset;
 
         // Question related variables
-        private int intervalBtwQuestion = 1500;
+        private int INTERVAL_BTW_QUESTIONS = 1500;
         private bool questionIsCorrect = false;
         private double intervalTime = 0;
+
+        //Transition related variables
+        float pauseAlpha;
+        InputAction pauseAction;
+
+        // Kinect related variables
+        private Runtime kinectRuntime;
+        private readonly GameTextureInstance kinectRGBVideo = new GameTextureInstance();
 
         //Constructor
         public GameplayScreen()
@@ -80,18 +89,8 @@ namespace GameStateManagementSample
         }
         #endregion
 
-        #region Fields
 
-        float pauseAlpha;
-        InputAction pauseAction;
-
-        // Kinect Vars
-        private Runtime kinectRuntime;
-        private readonly GameTextureInstance kinectRGBVideo = new GameTextureInstance();
-
-        #endregion
-
-        #region Initialization
+        #region Game
 
         /// <summary>
         /// Load graphics content for the game.
@@ -100,8 +99,8 @@ namespace GameStateManagementSample
         {
             if (!instancePreserved)
             {
-                if (Content == null)
-                    Content = new ContentManager(ScreenManager.Game.Services, "Content");
+                if (content == null)
+                    content = new ContentManager(ScreenManager.Game.Services, "Content");
 
                 kinectRGBVideo.Texture = new Texture2D(ScreenManager.GraphicsDevice, 640, 480, false, SurfaceFormat.Color);
 
@@ -112,17 +111,18 @@ namespace GameStateManagementSample
                 kinectRuntime.VideoFrameReady += VideoFrameReady;
                 kinectRuntime.SkeletonFrameReady += SkeletonFrameReady;
 
-                kinectRGBVideo.Position = new Vector2(183, 225);
+                kinectRGBVideo.Position = new Vector2(183, 228);
+                UI_KinectFrameOffset = new Vector2(183, 228);
 
                 // Game Set inits.
                 initGameSetList();
                 generateGameSet();
 
                 // Load sounds 
-                correct_snd = new GameSFX(Content.Load<SoundEffect>("kling"));
+                correct_snd = new GameSFX(content.Load<SoundEffect>("kling"));
 
                 //Loads the background music and plays it
-                GameMusic background = new GameMusic(Content.Load<Song>("background_music3"));
+                GameMusic background = new GameMusic(content.Load<Song>("background_music3"));
                 background.PlayLooping();
 
                 particleEffect = new ParticleEffect();
@@ -130,16 +130,16 @@ namespace GameStateManagementSample
                 {
                     GraphicsDeviceService = (IGraphicsDeviceService)ScreenManager.Game.Services.GetService(typeof(IGraphicsDeviceService))
                 };
-                particleRenderer.LoadContent(Content);
-                particleEffect = Content.Load<ParticleEffect>(("BasicExplosion"));
-                particleEffect.LoadContent(Content);
+                particleRenderer.LoadContent(content);
+                particleEffect = content.Load<ParticleEffect>(("BasicExplosion"));
+                particleEffect.LoadContent(content);
                 particleEffect.Initialise();
 
                 //Interface Layer
-                UI_FrameLayer = Content.Load<Texture2D>("frame");
+                UI_FrameLayer = content.Load<Texture2D>("frame");
                 UI_FrameLayerPosition = new Vector2(0, 0);
-                font = Content.Load<SpriteFont>("SpriteFont");
-                fontPos = new Vector2(535, 22);
+                UI_Font = content.Load<SpriteFont>("SpriteFont");
+                UI_FontPosition = new Vector2(535, 22);
 
                 // once the load has finished, we use ResetElapsedTime to tell the game's
                 // timing mechanism that we have just finished a very long frame, and that
@@ -182,7 +182,7 @@ namespace GameStateManagementSample
         /// </summary>
         public override void Unload()
         {
-            Content.Unload();
+            content.Unload();
         }
 
         #endregion
@@ -219,7 +219,7 @@ namespace GameStateManagementSample
             currentGameSet.Clear();
             gameObjectPosition.Clear();
 
-            var set = Content.LoadContent<Texture2D>("Level1\\" + getRandomGameSet());
+            var set = content.LoadContent<Texture2D>("Level1\\" + getRandomGameSet());
 
             List<string> contentName = new List<string>();
             foreach (string s in set.Keys)
@@ -322,6 +322,11 @@ namespace GameStateManagementSample
 
             return choice;
         }
+
+        public Vector2 getScreenPosition(Joint joint)
+        {
+            return (joint.GetScreenPosition(kinectRuntime, 640, 480) + UI_KinectFrameOffset);
+        }
         #endregion
 
         #region GameLogic
@@ -330,28 +335,9 @@ namespace GameStateManagementSample
             foreach (Joint joint in joints)
             {
 
-                if (joint.ID == JointID.HandRight)
+                if (joint.ID == JointID.HandRight || joint.ID == JointID.HandLeft)
                 {
-                    // Place solution object replica on the person's hand
-                    Vector2 jointPosition = joint.GetScreenPosition(kinectRuntime, ScreenManager.GraphicsDevice.Viewport.Width, ScreenManager.GraphicsDevice.Viewport.Height);
-                    //solutionObjectReplica.Position = jointPosition;
-
-                    if (!questionIsCorrect && checkSolutionIntersection(jointPosition))
-                    {
-                        correctChoice(jointPosition);
-                    }
-                    else
-                    {
-                        wrongChoice();
-                    }
-
-                }
-
-                if (joint.ID == JointID.HandLeft)
-                {
-                    // Place solution object replica on the person's hand
-                    Vector2 jointPosition = joint.GetScreenPosition(kinectRuntime, ScreenManager.GraphicsDevice.Viewport.Width, ScreenManager.GraphicsDevice.Viewport.Height);
-                    //solutionObjectReplica.Position = jointPosition;
+                    Vector2 jointPosition = getScreenPosition(joint);
 
                     if (!questionIsCorrect && checkSolutionIntersection(jointPosition))
                     {
@@ -371,7 +357,7 @@ namespace GameStateManagementSample
 
             intervalTime += (float)gameTime.ElapsedGameTime.Milliseconds;
 
-            if (intervalTime >= intervalBtwQuestion)
+            if (intervalTime >= INTERVAL_BTW_QUESTIONS)
             {
                 intervalTime = 0;
                 intervalTimeUp = true;
@@ -430,8 +416,8 @@ namespace GameStateManagementSample
 
             //Printing out question, score
             string output = "" + this.score;
-            Vector2 fontOrigin = font.MeasureString(output) / 2;
-            spriteBatch.DrawString(font, output, fontPos, Color.Black, 0, fontOrigin, 1.5f, SpriteEffects.None, 0.5f);
+            Vector2 fontOrigin = UI_Font.MeasureString(output) / 2;
+            spriteBatch.DrawString(UI_Font, output, UI_FontPosition, Color.Black, 0, fontOrigin, 1.5f, SpriteEffects.None, 0.5f);
             spriteBatch.End();
 
             particleRenderer.RenderEffect(particleEffect);
