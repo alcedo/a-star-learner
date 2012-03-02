@@ -62,7 +62,7 @@ namespace GameStateManagementSample
             screenManager.AddScreen(new BackgroundScreen(), null);
 
             // Add Main Menu Screen
-            // screenManager.AddScreen(new MainMenuScreen(graphics.PreferredBackBufferWidth, Content, graphics), null);
+            //screenManager.AddScreen(new MainMenuScreen(), null);
 
             // Development purpose
             screenManager.AddScreen(new GameplayScreen(), null);

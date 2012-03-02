@@ -64,9 +64,19 @@ namespace GameStateManagementSample
         // Display Interface
         Texture2D UI_FrameLayer;
         Vector2 UI_FrameLayerPosition;
-        SpriteFont UI_Font;
-        Vector2 UI_FontPosition;
         Vector2 UI_KinectFrameOffset;
+
+        SpriteFont UI_Font_Instruction;
+        Vector2 UI_FontPosition_Instruction;
+
+        SpriteFont UI_Font_Score;
+        Vector2 UI_FontPosition_Score;
+
+        SpriteFont UI_Font_Time;
+        Vector2 UI_FontPosition_Time;
+
+        SpriteFont UI_Font_Level;
+        Vector2 UI_FontPosition_Level;
 
         //Interactive Elements
         TextAnimator textAnimator;
@@ -84,6 +94,9 @@ namespace GameStateManagementSample
         private Runtime kinectRuntime;
         private readonly GameTextureInstance kinectRGBVideo = new GameTextureInstance();
 
+
+        //Initiate GameLevelManagement
+        private GameLevelManagement gameLevelManagement; 
         //Constructor
         public GameplayScreen()
         {
@@ -94,6 +107,10 @@ namespace GameStateManagementSample
                 new Buttons[] { Buttons.Start, Buttons.Back },
                 new Keys[] { Keys.Escape },
                 true);
+
+            //retrieve the current level of the game
+            gameLevelManagement = new GameLevelManagement(1);
+
         }
         #endregion
         
@@ -118,11 +135,11 @@ namespace GameStateManagementSample
                 kinectRuntime.VideoFrameReady += VideoFrameReady;
                 kinectRuntime.SkeletonFrameReady += SkeletonFrameReady;
 
-                kinectRGBVideo.Position = new Vector2(183, 228);
-                UI_KinectFrameOffset = new Vector2(183, 228);
+                kinectRGBVideo.Position = new Vector2(183, 225);
+                UI_KinectFrameOffset = new Vector2(183, 225);
 
                 // Game Set inits.
-                initGameSetList();
+                gameLevelManagement.loadGameLevel();
                 generateGameSet();
 
                 // Load sounds 
@@ -145,8 +162,14 @@ namespace GameStateManagementSample
                 //Interface Layer
                 UI_FrameLayer = content.Load<Texture2D>("frame");
                 UI_FrameLayerPosition = new Vector2(0, 0);
-                UI_Font = content.Load<SpriteFont>("SpriteFont");
-                UI_FontPosition = new Vector2(535, 22);
+                UI_Font_Instruction = content.Load<SpriteFont>("SpriteFont");
+                UI_FontPosition_Instruction = new Vector2(500, 90);
+                UI_Font_Score = content.Load<SpriteFont>("SpriteFont");
+                UI_FontPosition_Score = new Vector2(500, 22);
+                UI_Font_Level = content.Load<SpriteFont>("SpriteFont");
+                UI_FontPosition_Level = new Vector2(80, 22);
+                UI_Font_Time = content.Load<SpriteFont>("SpriteFont");
+                UI_FontPosition_Time = new Vector2(850, 22);
 
                 //Interactive Elements
                 textAnimator = new TextAnimator(content.Load<SpriteFont>("SpriteFont"));
@@ -209,21 +232,6 @@ namespace GameStateManagementSample
 
         #endregion
 
-        #region Game Init Helper
-        /// <summary>
-        /// This function would randomly select and set for us the correct solution  
-        /// and pick random "non correct" red - herrings. 
-        /// </summary>
-        public void initGameSetList()
-        {
-            gameSetList.Add("Set1"); gameSetList.Add("Set6");
-            gameSetList.Add("Set2"); gameSetList.Add("Set7");
-            gameSetList.Add("Set3"); gameSetList.Add("Set8");
-            gameSetList.Add("Set4"); gameSetList.Add("Set9");
-            gameSetList.Add("Set5"); gameSetList.Add("Set10");
-        }
-        #endregion
-
         #region Debug Initialization
         SkeletonOverlayDebugger skeletonDebugger;
         ShapesOverlayDebugger shapeDebugger = new ShapesOverlayDebugger();
@@ -248,9 +256,8 @@ namespace GameStateManagementSample
             solutionObjectReplica = null;
             currentGameSet.Clear();
             gameObjectPosition.Clear();
-
-            var set = content.LoadContent<Texture2D>("Level1\\" + getRandomGameSet());
-
+            gameLevelManagement.loadGameSets();
+            var set = content.LoadContent<Texture2D>(gameLevelManagement.getCurrentLevelContent());
             List<string> contentName = new List<string>();
             foreach (string s in set.Keys)
                 contentName.Add(s);
@@ -264,7 +271,6 @@ namespace GameStateManagementSample
             GameSprite selectionSprite1 = new GameSprite(set[contentName[contentRand[1]]], 1, 1, 0, 0);
             GameSprite selectionSprite2 = new GameSprite(set[contentName[contentRand[2]]], 1, 1, 0, 0);
             GameSprite selectionSprite3 = new GameSprite(set[contentName[contentRand[3]]], 1, 1, 0, 0);
-            // GameSprite selectionSprite4 = new GameSprite(set1["yellow_ball"]  , 1, 1, 0, 0);
 
             // Store positions. These are namely 2 on the left, 2 on the right
             gameObjectPosition.Add(new Vector2(190, 235)); //top left 
@@ -287,7 +293,7 @@ namespace GameStateManagementSample
             solutionObj.isSolutionObject = true;
 
             // Create a replica of the solution object for question display 
-            solutionObjectReplica = new GameObject(solutionSprite, 500, 125);
+            solutionObjectReplica = new GameObject(solutionSprite, 470, 105);
 
             GameObject selectionObject1 = new GameObject(selectionSprite1, gameObjectPosition[randPosn[1]]);
             GameObject selectionObject2 = new GameObject(selectionSprite2, gameObjectPosition[randPosn[2]]);
@@ -325,14 +331,6 @@ namespace GameStateManagementSample
         private void wrongChoice()
         {
             // play sound. 
-        }
-
-        public string getRandomGameSet()
-        {
-            Random rand = new Random((int)DateTime.Now.Ticks);
-            // Rand.Next picks lower bound(Inclusive) and Upper Bound Exclusive;
-            int choice = rand.Next(0, gameSetList.Count);
-            return gameSetList[choice];
         }
 
         /// <summary>
@@ -459,10 +457,21 @@ namespace GameStateManagementSample
             spriteBatch.Draw(UI_FrameLayer, UI_FrameLayerPosition, Color.White);
 
             //Printing out question, score
-            string output = "" + score;
-            Vector2 fontOrigin = UI_Font.MeasureString(output) / 2;
-            spriteBatch.DrawString(UI_Font, output, UI_FontPosition, Color.Black, 0, fontOrigin, 1.5f, SpriteEffects.None, 0.5f);
+            string instruction = gameLevelManagement.getCurrentLevelInstruction();
+            Vector2 fontOrigin_instruction = UI_Font_Score.MeasureString(instruction) / 2;
+            spriteBatch.DrawString(UI_Font_Score, instruction, UI_FontPosition_Instruction, Color.Black, 0, fontOrigin_instruction, 1.5f, SpriteEffects.None, 0.5f);
 
+            string score = "Score: " + this.score;
+            Vector2 fontOrigin_score = UI_Font_Score.MeasureString(score)/2;
+            spriteBatch.DrawString(UI_Font_Score, score, UI_FontPosition_Score, Color.Black, 0, fontOrigin_score, 1.5f, SpriteEffects.None, 0.5f);
+
+            string level = "Level: " + gameLevelManagement.getCurrentLevel().ToString();
+            Vector2 fontOrigin_level = UI_Font_Score.MeasureString(level) / 2;
+            spriteBatch.DrawString(UI_Font_Level, level, UI_FontPosition_Level, Color.Black, 0, fontOrigin_level, 1.5f, SpriteEffects.None, 0.5f);
+
+            string time = "Time: ";
+            Vector2 fontOrigin_time = UI_Font_Score.MeasureString(time) / 2;
+            spriteBatch.DrawString(UI_Font_Time, time, UI_FontPosition_Time, Color.Black, 0, fontOrigin_time, 1.5f, SpriteEffects.None, 0.5f);
             //Debugger
             if (debuggerOn)
             {
