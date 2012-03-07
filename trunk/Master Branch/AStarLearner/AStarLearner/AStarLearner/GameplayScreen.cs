@@ -26,6 +26,7 @@ using ProjectMercury.Modifiers;
 using ProjectMercury.Renderers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using XNATweener;
 using XnaHelpers.GameEngine;
@@ -61,6 +62,9 @@ namespace GameStateManagementSample
         private const int JointIntersectionSize = 80;
         int score;
 
+        // Timing Counter
+        private int totalGameTime;
+
         // Display Interface
         Texture2D UI_FrameLayer;
         Vector2 UI_FrameLayerPosition;
@@ -82,9 +86,15 @@ namespace GameStateManagementSample
         TextAnimator textAnimator;
 
         // Question related variables
-        private int INTERVAL_BTW_QUESTIONS = 2000;
         private bool questionIsCorrect = false;
-        private double intervalTime = 0;
+
+        // Game Time Counters
+        private int INTERVAL_BTW_QUESTIONS = 2000;
+        private double intervalBtwQuestion = 0;
+        private int INTERVAL_PER_QUESTIONS = 20000;
+        private double intervalPerQuestion = 0;
+        private int INTERVAL_PER_GAME_ROUND = 120000;
+        private double intervalPerGameRound = 0; 
 
         //Transition related variables
         float pauseAlpha;
@@ -217,8 +227,6 @@ namespace GameStateManagementSample
                     shapeDebugger.init(ScreenManager.GraphicsDevice);
                 }
             }
-
-
         }
 
         private void VideoFrameReady(object sender, ImageFrameReadyEventArgs e)
@@ -284,6 +292,8 @@ namespace GameStateManagementSample
 
         public List<GameObject> generateGameSet()
         {
+            intervalBtwQuestion = 0;
+            intervalPerQuestion = 0;
             questionIsCorrect = false;
             solutionObjectReplica = null;
             currentGameSet.Clear();
@@ -349,12 +359,11 @@ namespace GameStateManagementSample
                                    (int)jointPosition.Y - (JointIntersectionSize / 2), JointIntersectionSize, JointIntersectionSize);
 
             return currentGameSet[0].Collision(rectangle);
-
         }
 
         private void correctChoice(Vector2 pos)
         {
-            particleEffect.Trigger(pos); //To-do:Kenny particleEffect.Trigger position to be at where the object is instead of collision
+            particleEffect.Trigger(pos);
             questionIsCorrect = true;
             destroyGameSet();
             correct_snd.MultiPlay();
@@ -428,18 +437,34 @@ namespace GameStateManagementSample
             }
         }
 
-        private bool intervalTimeUp(GameTime gameTime)
+        private bool intervalPerGameRoundUp(GameTime gameTime)
         {
-            bool intervalTimeUp = false;
-
-            intervalTime += (float)gameTime.ElapsedGameTime.Milliseconds;
-
-            if (intervalTime >= INTERVAL_BTW_QUESTIONS)
+            intervalPerGameRound += (float)gameTime.ElapsedGameTime.Milliseconds;
+            if (intervalPerGameRound >= INTERVAL_PER_GAME_ROUND)
             {
-                intervalTime = 0;
-                intervalTimeUp = true;
+                return true;
             }
-            return intervalTimeUp;
+            return false;
+        }
+
+        private bool intervalPerQuestionUp(GameTime gameTime)
+        {
+            intervalPerQuestion += (float)gameTime.ElapsedGameTime.Milliseconds;
+            if (intervalPerQuestion >= INTERVAL_PER_QUESTIONS)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool intervalBtwQuestionUp(GameTime gameTime)
+        {
+            intervalBtwQuestion += (float)gameTime.ElapsedGameTime.Milliseconds;
+            if (intervalBtwQuestion >= INTERVAL_BTW_QUESTIONS)
+            {
+                return true;
+            }
+            return false;
         }
         #endregion
 
@@ -466,14 +491,25 @@ namespace GameStateManagementSample
 
                 // Question related variables initialization
                 float SecondsPassed = (float)gameTime.ElapsedGameTime.TotalSeconds;
-                int totalGameTime = gameTime.TotalGameTime.Seconds;
+                totalGameTime = gameTime.TotalGameTime.Seconds;
                 particleEffect.Update(SecondsPassed);
 
                 // Game Logic
-                if (questionIsCorrect && intervalTimeUp(gameTime))
+                if (intervalPerQuestionUp(gameTime))
+                {
+                    generateGameSet();
+                }
+
+                if (questionIsCorrect && intervalBtwQuestionUp(gameTime))
                 {
                     textAnimator.Stop();
                     generateGameSet();
+                }
+
+                if (intervalPerGameRoundUp(gameTime))
+                {
+                    LoadingScreen.Load(ScreenManager, false, null, new BackgroundScreen(),
+                                                           new MainMenuScreen());
                 }
 
                 textAnimator.updateTweener(gameTime);
@@ -509,7 +545,7 @@ namespace GameStateManagementSample
             Vector2 fontOrigin_level = UI_Font_Score.MeasureString(level) / 2;
             spriteBatch.DrawString(UI_Font_Level, level, UI_FontPosition_Level, Color.Black, 0, fontOrigin_level, 1.5f, SpriteEffects.None, 0.5f);
 
-            string time = "Time: ";
+            string time = "Time: " + this.totalGameTime;
             Vector2 fontOrigin_time = UI_Font_Score.MeasureString(time) / 2;
             spriteBatch.DrawString(UI_Font_Time, time, UI_FontPosition_Time, Color.Black, 0, fontOrigin_time, 1.5f, SpriteEffects.None, 0.5f);
 
