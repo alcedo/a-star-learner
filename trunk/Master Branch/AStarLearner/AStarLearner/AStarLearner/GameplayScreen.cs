@@ -288,7 +288,9 @@ namespace GameStateManagementSample
             solutionObjectReplica = null;
             currentGameSet.Clear();
             gameObjectPosition.Clear();
+
             gameLevelManagement.loadGameSets();
+
             var set = content.LoadContent<Texture2D>(gameLevelManagement.getCurrentLevelContent());
             List<string> contentName = new List<string>();
             foreach (string s in set.Keys)
