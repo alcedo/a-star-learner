@@ -9,8 +9,7 @@ namespace AStarLearner
     class GameLevelManagement
     {
         private int Level; //Level of the game
-        private List<String> gameSets; //store all the gameset names of the given level 
-        private List<String> gameElements; //store all the elements of the given gameset name
+        private List<String> gameSets; //store all the gameset names of the given level    
         private string instruction;
         private string contFolder;
 
@@ -19,7 +18,6 @@ namespace AStarLearner
         {
             this.Level = level;
             this.gameSets = new List<string>();
-            this.gameElements = new List<string>();
         }
         #endregion
 
@@ -35,14 +33,6 @@ namespace AStarLearner
         public string getCurrentLevelContent()
         {
             return this.contFolder;
-        }
-        public int getGameElementsCount()
-        {
-            return this.gameElements.Count;
-        }
-        public string getGameElementsContent(int i)
-        {
-            return this.gameElements[i];
         }
         #endregion
 
@@ -108,12 +98,6 @@ namespace AStarLearner
         #endregion
 
 
-        #region Game Elements
-        public void addGameElements(String e)
-        {
-            this.gameElements.Add(e);
-        }
-        #endregion
     }
 }
 
