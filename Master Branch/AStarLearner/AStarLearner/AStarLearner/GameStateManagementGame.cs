@@ -23,14 +23,16 @@ namespace GameStateManagementSample
         ScreenManager screenManager;
         ScreenFactory screenFactory;
 
+        public const int gameWidth = 1000;
+        public const int gameHeight = 700;
+
         /// <summary>
         /// The main game constructor.
         /// </summary>
         public GameStateManagementGame()
         {
             Content.RootDirectory = "Content";
-            const int gameWidth = 1000;
-            const int gameHeight = 700;
+
             const bool isFullScreen = false;
 
             graphics = new GraphicsDeviceManager(this);
@@ -65,7 +67,7 @@ namespace GameStateManagementSample
             screenManager.AddScreen(new MainMenuScreen(), null);
 
             // Development purpose
-            //screenManager.AddScreen(new GameplayScreen(), null);
+            // screenManager.AddScreen(new GameplayScreen(), null);
         }
 
         /// <summary>

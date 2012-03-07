@@ -97,6 +97,7 @@ namespace GameStateManagementSample
 
         //Initiate GameLevelManagement
         private GameLevelManagement gameLevelManagement; 
+
         //Constructor
         public GameplayScreen(int level)
         {
@@ -111,7 +112,37 @@ namespace GameStateManagementSample
             //retrieve the current level of the game
             gameLevelManagement = new GameLevelManagement(level);
 
+ 
+
         }
+
+        public override void HandleInput(GameTime gameTime, InputState input)
+        {
+            if (input == null)
+                throw new ArgumentNullException("input");
+
+            // Look up inputs for the active player profile.
+            int playerIndex = (int)ControllingPlayer.Value;
+
+            KeyboardState keyboardState = input.CurrentKeyboardStates[playerIndex];
+            GamePadState gamePadState = input.CurrentGamePadStates[playerIndex];
+
+            // The game pauses either if the user presses the pause button, or if
+            // they unplug the active gamepad. This requires us to keep track of
+            // whether a gamepad was ever plugged in, because we don't want to pause
+            // on PC if they are playing with a keyboard and have no gamepad at all!
+            bool gamePadDisconnected = !gamePadState.IsConnected &&
+                                       input.GamePadWasConnected[playerIndex];
+
+            PlayerIndex player;
+            if (pauseAction.Evaluate(input, ControllingPlayer, out player) || gamePadDisconnected)
+            {
+                ScreenManager.AddScreen(new PauseMenuScreen(GameStateManagementGame.gameWidth), ControllingPlayer);
+            }
+
+        }
+
+
         #endregion
         
         #region Game Graphic and Game Set initialization
@@ -228,6 +259,7 @@ namespace GameStateManagementSample
         public override void Unload()
         {
             content.Unload();
+            kinectRuntime.Uninitialize();
         }
 
         #endregion
@@ -374,17 +406,21 @@ namespace GameStateManagementSample
                     }
                 }
 
-                if (joint.ID == JointID.HandRight || joint.ID == JointID.HandLeft)
-                {
-                    Vector2 jointPosition = getScreenPosition(joint);
 
-                    if (!questionIsCorrect && checkSolutionIntersection(jointPosition))
+                if (IsActive) // Process game logic if the screen is active and infront .
+                {
+                    if (joint.ID == JointID.HandRight || joint.ID == JointID.HandLeft)
                     {
-                        correctChoice(jointPosition);
-                    }
-                    else
-                    {
-                        wrongChoice();
+                        Vector2 jointPosition = getScreenPosition(joint);
+
+                        if (!questionIsCorrect && checkSolutionIntersection(jointPosition))
+                        {
+                            correctChoice(jointPosition);
+                        }
+                        else
+                        {
+                            wrongChoice();
+                        }
                     }
                 }
             }
@@ -424,7 +460,8 @@ namespace GameStateManagementSample
                 pauseAlpha = Math.Max(pauseAlpha - 1f / 32, 0);
 
             if (IsActive)
-            { 
+            {
+
                 // Question related variables initialization
                 float SecondsPassed = (float)gameTime.ElapsedGameTime.TotalSeconds;
                 int totalGameTime = gameTime.TotalGameTime.Seconds;
@@ -449,6 +486,7 @@ namespace GameStateManagementSample
             // This game has a blue background. Why? Because!
             ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
                                                Color.CornflowerBlue, 0, 0);
+           
 
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
             
@@ -472,8 +510,9 @@ namespace GameStateManagementSample
             string time = "Time: ";
             Vector2 fontOrigin_time = UI_Font_Score.MeasureString(time) / 2;
             spriteBatch.DrawString(UI_Font_Time, time, UI_FontPosition_Time, Color.Black, 0, fontOrigin_time, 1.5f, SpriteEffects.None, 0.5f);
-            //Debugger
-            if (debuggerOn)
+
+
+            if (debuggerOn)     //Debugger
             {
                 skeletonDebugger.DrawSkeletonOverlay_XNA(spriteBatch,
                                                               new LineBrush(ScreenManager.GraphicsDevice, 3),
@@ -481,17 +520,20 @@ namespace GameStateManagementSample
                                                               new Vector2(kinectRuntime.VideoStream.Width, kinectRuntime.VideoStream.Height),
                                                               Color.Red);
             }
+
             spriteBatch.End();
 
-            particleRenderer.RenderEffect(particleEffect);
 
-            textAnimator.DrawText("Good Job!~", spriteBatch,
+            if (IsActive)
+            {
+                particleRenderer.RenderEffect(particleEffect);
+
+                // Draw text. Text tween position are being updated in Update() 
+                textAnimator.DrawText("Good Job!~", spriteBatch,
                       new Vector2(ScreenManager.Game.Window.ClientBounds.Width / 2, ScreenManager.Game.Window.ClientBounds.Height / 3),
                       new Vector2(ScreenManager.Game.Window.ClientBounds.Width / 2, ScreenManager.Game.Window.ClientBounds.Height - 80),
                       2.0f);
 
-            if (IsActive)
-            {
                 foreach (GameObject g in currentGameSet)
                     g.Draw(spriteBatch);
 
