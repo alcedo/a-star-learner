@@ -98,7 +98,7 @@ namespace GameStateManagementSample
         //Initiate GameLevelManagement
         private GameLevelManagement gameLevelManagement; 
         //Constructor
-        public GameplayScreen()
+        public GameplayScreen(int level)
         {
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
@@ -109,7 +109,7 @@ namespace GameStateManagementSample
                 true);
 
             //retrieve the current level of the game
-            gameLevelManagement = new GameLevelManagement(1);
+            gameLevelManagement = new GameLevelManagement(level);
 
         }
         #endregion
