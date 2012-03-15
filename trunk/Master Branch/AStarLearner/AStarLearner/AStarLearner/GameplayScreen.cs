@@ -94,7 +94,8 @@ namespace GameStateManagementSample
         private int INTERVAL_PER_QUESTIONS = 20000;
         private double intervalPerQuestion = 0;
         private int INTERVAL_PER_GAME_ROUND = 120000;
-        private double intervalPerGameRound = 0; 
+        private double intervalPerGameRound = 0;
+        private double roundTime = 0;
 
         //Transition related variables
         float pauseAlpha;
@@ -493,7 +494,7 @@ namespace GameStateManagementSample
                 float SecondsPassed = (float)gameTime.ElapsedGameTime.TotalSeconds;
                 totalGameTime = gameTime.TotalGameTime.Seconds;
                 particleEffect.Update(SecondsPassed);
-
+                roundTime = Math.Round(intervalPerGameRound / 1000);
                 // Game Logic
                 if (intervalPerQuestionUp(gameTime))
                 {
@@ -545,7 +546,7 @@ namespace GameStateManagementSample
             Vector2 fontOrigin_level = UI_Font_Score.MeasureString(level) / 2;
             spriteBatch.DrawString(UI_Font_Level, level, UI_FontPosition_Level, Color.Black, 0, fontOrigin_level, 1.5f, SpriteEffects.None, 0.5f);
 
-            string time = "Time: " + this.totalGameTime;
+            string time = "Time: " + this.roundTime;
             Vector2 fontOrigin_time = UI_Font_Score.MeasureString(time) / 2;
             spriteBatch.DrawString(UI_Font_Time, time, UI_FontPosition_Time, Color.Black, 0, fontOrigin_time, 1.5f, SpriteEffects.None, 0.5f);
 
