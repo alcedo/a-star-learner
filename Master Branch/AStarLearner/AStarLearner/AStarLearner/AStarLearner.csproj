@@ -126,6 +126,7 @@
     <Compile Include="GameContentLoader.cs" />
     <Compile Include="GameInput.cs" />
     <Compile Include="GameLevelManagement.cs" />
+    <Compile Include="GameLogicManagement.cs" />
     <Compile Include="GameMath.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="GameParticleSystem.cs" />
