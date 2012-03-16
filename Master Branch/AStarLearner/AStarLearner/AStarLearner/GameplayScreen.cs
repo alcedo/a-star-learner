@@ -62,9 +62,6 @@ namespace GameStateManagementSample
         private const int JointIntersectionSize = 80;
         int score;
 
-        // Timing Counter
-        private int totalGameTime;
-
         // Display Interface
         Texture2D UI_FrameLayer;
         Vector2 UI_FrameLayerPosition;
@@ -88,15 +85,6 @@ namespace GameStateManagementSample
         // Question related variables
         private bool questionIsCorrect = false;
 
-        // Game Time Counters
-        private int INTERVAL_BTW_QUESTIONS = 2000;
-        private double intervalBtwQuestion = 0;
-        private int INTERVAL_PER_QUESTIONS = 20000;
-        private double intervalPerQuestion = 0;
-        private int INTERVAL_PER_GAME_ROUND = 120000;
-        private double intervalPerGameRound = 0;
-        private double roundTime = 0;
-
         //Transition related variables
         float pauseAlpha;
         InputAction pauseAction;
@@ -107,7 +95,8 @@ namespace GameStateManagementSample
 
 
         //Initiate GameLevelManagement
-        private GameLevelManagement gameLevelManagement; 
+        private GameLevelManagement gameLevelManagement;
+        private GameTimeManagement gameTimeManager;
 
         //Constructor
         public GameplayScreen(int level)
@@ -122,10 +111,9 @@ namespace GameStateManagementSample
 
             //retrieve the current level of the game
             gameLevelManagement = new GameLevelManagement(level);
+            gameTimeManager = new GameTimeManagement();
 
- 
-
-        }
+         }
 
         public override void HandleInput(GameTime gameTime, InputState input)
         {
@@ -245,7 +233,15 @@ namespace GameStateManagementSample
                 if (data.TrackingState == SkeletonTrackingState.Tracked)
                 {
                     // Game Logic
-                    gameLogic(data.Joints);
+                    if (IsActive) // Process game logic if the screen is active and infront .
+                    {
+                        gameLogic(data.Joints);
+                    }
+                    //Debugger
+                    if (debuggerOn)
+                    {
+                        debuggerSkeleton(data.Joints);
+                    }
                 }
             }
 
@@ -293,8 +289,6 @@ namespace GameStateManagementSample
 
         public List<GameObject> generateGameSet()
         {
-            intervalBtwQuestion = 0;
-            intervalPerQuestion = 0;
             questionIsCorrect = false;
             solutionObjectReplica = null;
             currentGameSet.Clear();
@@ -408,65 +402,37 @@ namespace GameStateManagementSample
         {
             foreach (Joint joint in joints)
             {
-                //Debugger
-                if (debuggerOn)
+                if (joint.ID == JointID.HandRight || joint.ID == JointID.HandLeft)
                 {
-                    if (joint.ID == JointID.HipCenter)
+                    Vector2 jointPosition = getScreenPosition(joint);
+
+                    if (!questionIsCorrect && checkSolutionIntersection(jointPosition))
                     {
-                        Vector2 jointPosition = getScreenPosition(joint);
-                        shapeDebugger.setPosition((jointPosition));
+                        correctChoice(jointPosition);
                     }
-                }
-
-
-                if (IsActive) // Process game logic if the screen is active and infront .
-                {
-                    if (joint.ID == JointID.HandRight || joint.ID == JointID.HandLeft)
+                    else
                     {
-                        Vector2 jointPosition = getScreenPosition(joint);
-
-                        if (!questionIsCorrect && checkSolutionIntersection(jointPosition))
-                        {
-                            correctChoice(jointPosition);
-                        }
-                        else
-                        {
-                            wrongChoice();
-                        }
+                        wrongChoice();
                     }
                 }
             }
         }
 
-        private bool intervalPerGameRoundUp(GameTime gameTime)
+        public void debuggerSkeleton(JointsCollection joints)
         {
-            intervalPerGameRound += (float)gameTime.ElapsedGameTime.Milliseconds;
-            if (intervalPerGameRound >= INTERVAL_PER_GAME_ROUND)
+            foreach (Joint joint in joints)
             {
-                return true;
+                if (joint.ID == JointID.HipCenter)
+                {
+                    Vector2 jointPosition = getScreenPosition(joint);
+                    shapeDebugger.setPosition((jointPosition));
+                }
             }
-            return false;
         }
 
-        private bool intervalPerQuestionUp(GameTime gameTime)
-        {
-            intervalPerQuestion += (float)gameTime.ElapsedGameTime.Milliseconds;
-            if (intervalPerQuestion >= INTERVAL_PER_QUESTIONS)
-            {
-                return true;
-            }
-            return false;
-        }
 
-        private bool intervalBtwQuestionUp(GameTime gameTime)
-        {
-            intervalBtwQuestion += (float)gameTime.ElapsedGameTime.Milliseconds;
-            if (intervalBtwQuestion >= INTERVAL_BTW_QUESTIONS)
-            {
-                return true;
-            }
-            return false;
-        }
+
+
         #endregion
 
         #region Update and Draw
@@ -492,22 +458,22 @@ namespace GameStateManagementSample
 
                 // Question related variables initialization
                 float SecondsPassed = (float)gameTime.ElapsedGameTime.TotalSeconds;
-                totalGameTime = gameTime.TotalGameTime.Seconds;
                 particleEffect.Update(SecondsPassed);
-                roundTime = Math.Round(intervalPerGameRound / 1000);
                 // Game Logic
-                if (intervalPerQuestionUp(gameTime))
+                if (gameTimeManager.intervalPerQuestionUp(gameTime))
                 {
                     generateGameSet();
+                    gameTimeManager.restartQuestionTimeCounter();
                 }
 
-                if (questionIsCorrect && intervalBtwQuestionUp(gameTime))
+                if (questionIsCorrect && gameTimeManager.intervalBtwQuestionUp(gameTime))
                 {
                     textAnimator.Stop();
                     generateGameSet();
+                    gameTimeManager.restartQuestionTimeCounter();
                 }
 
-                if (intervalPerGameRoundUp(gameTime))
+                if (gameTimeManager.intervalPerGameRoundUp(gameTime))
                 {
                     LoadingScreen.Load(ScreenManager, false, null, new BackgroundScreen(),
                                                            new MainMenuScreen());
@@ -546,7 +512,7 @@ namespace GameStateManagementSample
             Vector2 fontOrigin_level = UI_Font_Score.MeasureString(level) / 2;
             spriteBatch.DrawString(UI_Font_Level, level, UI_FontPosition_Level, Color.Black, 0, fontOrigin_level, 1.5f, SpriteEffects.None, 0.5f);
 
-            string time = "Time: " + this.roundTime;
+            string time = "Time: " + gameTimeManager.getRoundTime();
             Vector2 fontOrigin_time = UI_Font_Score.MeasureString(time) / 2;
             spriteBatch.DrawString(UI_Font_Time, time, UI_FontPosition_Time, Color.Black, 0, fontOrigin_time, 1.5f, SpriteEffects.None, 0.5f);
 

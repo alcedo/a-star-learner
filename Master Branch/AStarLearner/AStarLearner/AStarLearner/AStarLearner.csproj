@@ -136,6 +136,7 @@
     <Compile Include="GameSound.cs" />
     <Compile Include="GameSprite.cs" />
     <Compile Include="GameStateManagementGame.cs" />
+    <Compile Include="GameTimeManagement.cs" />
     <Compile Include="GameTimer.cs" />
     <Compile Include="DebugHelper\Mathematics\GeometryHelper.cs" />
     <Compile Include="GestureRecognition.cs" />
