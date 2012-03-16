@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using XnaHelpers.GameEngine;
 
-namespace AStarLearner
+namespace GameLevelManagement
 {
-    class GameLevelManagement
+    class GameLevelManager
     {
         private int Level; //Level of the game
         private List<String> gameSets; //store all the gameset names of the given level    
@@ -14,7 +14,7 @@ namespace AStarLearner
         private string contFolder;
 
         #region Constructor
-        public GameLevelManagement(int level)
+        public GameLevelManager(int level)
         {
             this.Level = level;
             this.gameSets = new List<string>();
