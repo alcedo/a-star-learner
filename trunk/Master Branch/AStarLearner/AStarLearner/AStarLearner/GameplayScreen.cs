@@ -11,7 +11,10 @@
 using AStarLearner;
 using AStarLearner.DebugHelper;
 using AStarLearner.InteractiveElements;
+using GameLogicManagement;
+using GameLevelManagement;
 using GameStateManagement;
+using GameTimeManagement;
 using Microsoft.Research.Kinect.Nui;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -95,8 +98,8 @@ namespace GameStateManagementSample
 
 
         //Initiate GameLevelManagement
-        private GameLevelManagement gameLevelManagement;
-        private GameTimeManagement gameTimeManager;
+        private GameLevelManager gameLevelManager;
+        private GameTimeManager gameTimeManager;
 
         //Constructor
         public GameplayScreen(int level)
@@ -110,8 +113,8 @@ namespace GameStateManagementSample
                 true);
 
             //retrieve the current level of the game
-            gameLevelManagement = new GameLevelManagement(level);
-            gameTimeManager = new GameTimeManagement();
+            gameLevelManager = new GameLevelManager(level);
+            gameTimeManager = new GameTimeManager();
 
          }
 
@@ -169,7 +172,7 @@ namespace GameStateManagementSample
                 UI_KinectFrameOffset = new Vector2(183, 225);
 
                 // Game Set inits.
-                gameLevelManagement.loadGameLevel();
+                gameLevelManager.loadGameLevel();
                 generateGameSet();
 
                 // Load sounds 
@@ -294,9 +297,9 @@ namespace GameStateManagementSample
             currentGameSet.Clear();
             gameObjectPosition.Clear();
 
-            gameLevelManagement.loadGameSets();
+            gameLevelManager.loadGameSets();
 
-            var set = content.LoadContent<Texture2D>(gameLevelManagement.getCurrentLevelContent());
+            var set = content.LoadContent<Texture2D>(gameLevelManager.getCurrentLevelContent());
             List<string> contentName = new List<string>();
             foreach (string s in set.Keys)
                 contentName.Add(s);
@@ -500,7 +503,7 @@ namespace GameStateManagementSample
             spriteBatch.Draw(UI_FrameLayer, UI_FrameLayerPosition, Color.White);
 
             //Printing out question, score
-            string instruction = gameLevelManagement.getCurrentLevelInstruction();
+            string instruction = gameLevelManager.getCurrentLevelInstruction();
             Vector2 fontOrigin_instruction = UI_Font_Score.MeasureString(instruction) / 2;
             spriteBatch.DrawString(UI_Font_Score, instruction, UI_FontPosition_Instruction, Color.Black, 0, fontOrigin_instruction, 1.5f, SpriteEffects.None, 0.5f);
 
@@ -508,7 +511,7 @@ namespace GameStateManagementSample
             Vector2 fontOrigin_score = UI_Font_Score.MeasureString(score)/2;
             spriteBatch.DrawString(UI_Font_Score, score, UI_FontPosition_Score, Color.Black, 0, fontOrigin_score, 1.5f, SpriteEffects.None, 0.5f);
 
-            string level = "Level: " + gameLevelManagement.getCurrentLevel().ToString();
+            string level = "Level: " + gameLevelManager.getCurrentLevel().ToString();
             Vector2 fontOrigin_level = UI_Font_Score.MeasureString(level) / 2;
             spriteBatch.DrawString(UI_Font_Level, level, UI_FontPosition_Level, Color.Black, 0, fontOrigin_level, 1.5f, SpriteEffects.None, 0.5f);
 
