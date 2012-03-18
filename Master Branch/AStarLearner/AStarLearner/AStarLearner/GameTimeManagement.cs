@@ -8,14 +8,19 @@ namespace GameTimeManagement
 {
     class GameTimeManager
     {
-        // Timing Counter
+        // Timing Counter Constants
         private int INTERVAL_BTW_QUESTIONS = 2000;
-        private double intervalBtwQuestion;
         private int INTERVAL_PER_QUESTIONS = 20000;
-        private double intervalPerQuestion;
         private int INTERVAL_PER_GAME_ROUND = 120000;
+        
+        // Tracking variables for calculation purposes
+        private double intervalBtwQuestion;
+        private double intervalPerQuestion;
         private double intervalPerGameRound;
 
+        // Stores game time internally so that other functions would be able to access the game time
+        public GameTime GameTime { get; set; }
+     
         #region Constructor        
         public GameTimeManager()
         {

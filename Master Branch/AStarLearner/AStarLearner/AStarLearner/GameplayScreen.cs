@@ -63,7 +63,7 @@ namespace GameStateManagementSample
         private List<Vector2> gameObjectPosition = new List<Vector2>(); // Position of 6 choices
 
         private const int JointIntersectionSize = 80;
-        int score;
+   
 
         // Display Interface
         Texture2D UI_FrameLayer;
@@ -88,6 +88,8 @@ namespace GameStateManagementSample
         // Question related variables
         private bool questionIsCorrect = false;
 
+        enum Selection { Correct, Wrong, Nil};
+        
         //Transition related variables
         float pauseAlpha;
         InputAction pauseAction;
@@ -100,7 +102,7 @@ namespace GameStateManagementSample
         //Initiate GameLevelManagement
         private GameLevelManager gameLevelManager;
         private GameTimeManager gameTimeManager;
-
+        
         //Constructor
         public GameplayScreen(int level)
         {
@@ -290,6 +292,13 @@ namespace GameStateManagementSample
             gameObjectPosition.Clear();
         }
 
+        /// <summary>
+        /// This function helps to initialize a game set. This game set would then be 
+        /// drawn subsequently in the draw() function. 
+        /// 
+        /// A Game set consists of A solution object and various selection object.
+        /// </summary>
+        /// <returns></returns>
         public List<GameObject> generateGameSet()
         {
             questionIsCorrect = false;
@@ -349,29 +358,56 @@ namespace GameStateManagementSample
 
             return currentGameSet;
         }
-
-        private bool checkSolutionIntersection(Vector2 jointPosition)
+        
+        // This function checks for intersection between game objects.
+        private Selection checkSolutionIntersection(Vector2 jointPosition)
         {
 
             Rectangle rectangle = new Rectangle((int)jointPosition.X - (JointIntersectionSize / 2),
                                    (int)jointPosition.Y - (JointIntersectionSize / 2), JointIntersectionSize, JointIntersectionSize);
 
-            return currentGameSet[0].Collision(rectangle);
+            foreach (GameObject obj in currentGameSet)
+            {
+                if (obj.Collision(rectangle))
+                {
+                    if (obj.isSolutionObject)
+                        return Selection.Correct;
+                    else
+                        return Selection.Wrong;
+                }
+            }
+
+            return Selection.Nil;
+
+            // note: currentGameSet[0].Collision(rectangle); , currentGameSet[0] refers to solution object
         }
 
+        /// <summary>
+        /// This function triggers whenever a correct choice has been made by the user
+        /// </summary>
+        /// <param name="pos">Position of correct solution</param>
+      
         private void correctChoice(Vector2 pos)
         {
-            particleEffect.Trigger(pos);
             questionIsCorrect = true;
+            //Particle Effect 
+            particleEffect.Trigger(pos);    
+            //Change GameSet
             destroyGameSet();
-            correct_snd.MultiPlay();
-            score++;
+            //Play sound
+            correct_snd.MultiPlay();      
+            // Add Score
+            GameScoringSystem.Instance.addScore(gameTimeManager.GameTime.ElapsedGameTime.Milliseconds);
+            // GameScoringSystem.Instance.checkWinningCondition(ref this.gameLevelManager);
+
+            // Display Encouragements
             textAnimator.Start();
         }
 
         private void wrongChoice()
         {
-            // play sound. 
+            // task: Make sure this function is called only once / game set 
+            // GameScoringSystem.Instance.decreaseScore();
         }
 
         /// <summary>
@@ -409,14 +445,30 @@ namespace GameStateManagementSample
                 {
                     Vector2 jointPosition = getScreenPosition(joint);
 
-                    if (!questionIsCorrect && checkSolutionIntersection(jointPosition))
+                    // Check if user made any selections
+                    Selection selection = checkSolutionIntersection(jointPosition);
+
+                    if (selection == Selection.Correct)
                     {
                         correctChoice(jointPosition);
                     }
-                    else
+                    else if(selection == Selection.Wrong)
                     {
                         wrongChoice();
                     }
+                   
+                    /*
+                    //task: why put !questionIsCorrect? as checking variable?
+                    if (!questionIsCorrect && checkSolutionIntersection(jointPosition)) // User selects the right choice
+                    {
+                        correctChoice(jointPosition);
+                    }
+                    else if (checkSolutionIntersection(jointPosition)) // User selects wrong choice
+                    {
+                        wrongChoice();
+                    }*/
+
+
                 }
             }
         }
@@ -458,10 +510,13 @@ namespace GameStateManagementSample
 
             if (IsActive)
             {
+                //Duplicate and store game time to allow other functions to acccess the game time var.
+                gameTimeManager.GameTime = gameTime;
 
                 // Question related variables initialization
                 float SecondsPassed = (float)gameTime.ElapsedGameTime.TotalSeconds;
                 particleEffect.Update(SecondsPassed);
+                
                 // Game Logic
                 if (gameTimeManager.intervalPerQuestionUp(gameTime))
                 {
@@ -507,7 +562,7 @@ namespace GameStateManagementSample
             Vector2 fontOrigin_instruction = UI_Font_Score.MeasureString(instruction) / 2;
             spriteBatch.DrawString(UI_Font_Score, instruction, UI_FontPosition_Instruction, Color.Black, 0, fontOrigin_instruction, 1.5f, SpriteEffects.None, 0.5f);
 
-            string score = "Score: " + this.score;
+            string score = "Score: " + GameScoringSystem.Instance.getScore();
             Vector2 fontOrigin_score = UI_Font_Score.MeasureString(score)/2;
             spriteBatch.DrawString(UI_Font_Score, score, UI_FontPosition_Score, Color.Black, 0, fontOrigin_score, 1.5f, SpriteEffects.None, 0.5f);
 
