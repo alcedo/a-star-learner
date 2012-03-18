@@ -81,6 +81,7 @@ namespace AStarLearner
         {
             if (this.totalScore > 4)
             {
+                glm.setLevel(2);
                 /*
                   
                  // Change Level 
@@ -89,7 +90,7 @@ namespace AStarLearner
                 
                  
                  */
-                // Ryan: change new level how ? 
+                // Ryan: change new level how ? setLevel(level) is a quick and dirty way to do things. not dynamic enough.
             }
 
             else if (this.totalScore > 14)
