@@ -6,12 +6,16 @@ using XnaHelpers.GameEngine;
 
 namespace GameLevelManagement
 {
-    class GameLevelManager
+    public class GameLevelManager
     {
         private int Level; //Level of the game
-        private List<String> gameSets; //store all the gameset names of the given level    
+        private List<String> gameSets; //store all the gameset names of the given level
+
+        public  const int MAXLEVEL = 2; // Max possible amount of level for our game
+
         private string instruction;
         private string contFolder;
+       
 
         #region Constructor
         public GameLevelManager(int level)
@@ -36,6 +40,14 @@ namespace GameLevelManagement
         }
         #endregion
 
+        #region Setters
+
+        public void setLevel(int level)
+        {
+            if(level <= MAXLEVEL) this.Level = level; 
+        }
+
+        #endregion
         //<summary>
         //This function is to load a proper set given a Level
         //</summary>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GameLevelManagement;
 
 namespace AStarLearner
 {
@@ -54,18 +55,49 @@ namespace AStarLearner
         // This function records the score of the user whenever a correct move is being made
         public void addScore(int gameTime)
         {
-            int score = 0;  
-            
-            // Calculate how fast the user managed to get a correct answer. if < 3 seconds, award extra pts
-            if (gameTime - previousGameTime < 3)  score = score + speedScore;
+            int score = 0;
 
+            score += baseScore; // Standard increment.
+
+            /**             Bonus Calculations below           **/
+            // Calculate how fast the user managed to get a correct answer. if < 3 seconds, award extra pts
+            // TODO: might want to use GameTimeManagement to call addScore() instead for time related bonuses.
+            // if (gameTime - previousGameTime < 3)  score = score + speedScore;
+                    
             if (comboCount > 3) score = score + comboCount;    // Combo score 
 
-            if (comboCount % 10 == 0) score = score + bonusScore;
+            if (comboCount > 0 && comboCount % 10 == 0) score = score + bonusScore; // Bonus due to combo streaks
 
             totalScore += score; // Update overall score.
             
             comboCount++;
+        }
+
+        /// <summary>
+        /// This function would ensure Level Progression is handled
+        /// and game end conditions is handled
+        /// </summary>
+        public void checkWinningCondition(ref GameLevelManager glm)
+        {
+            if (this.totalScore > 4)
+            {
+                /*
+                  
+                 // Change Level 
+                if(glm.getCurrentLevel() != GameLevelManager.MAXLEVEL)
+                    glm = new GameLevelManager(glm.getCurrentLevel() + 1);
+                
+                 
+                 */
+                // Ryan: change new level how ? 
+            }
+
+            else if (this.totalScore > 14)
+            {
+                // Change to level 2 and so on so forth ...
+
+            }
+
         }
 
         // Subtract scores from user when a wrong move is made. 
@@ -74,6 +106,11 @@ namespace AStarLearner
             // Reset combo counter 
             comboCount = 0; 
             totalScore -= baseScore;
+        }
+
+        public int getScore()
+        {
+            return this.totalScore;          
         }
         
         /// <summary>

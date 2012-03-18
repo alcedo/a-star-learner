@@ -206,8 +206,7 @@ namespace AStarLearner
                     //solutionObjectReplica.Position = jointPosition;
 
                     if (checkSolutionIntersection(jointPosition))
-                    {
-                        
+                    {                        
                         particleEffect.Trigger(jointPosition); //To-do:Victor Please help to confirm if this can be remove as particleEffect.Trigger is already called in correctChoice
                         correctChoice(jointPosition);
                     }
