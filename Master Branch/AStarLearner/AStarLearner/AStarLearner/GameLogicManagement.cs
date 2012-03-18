@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework;
 namespace GameLogicManagement
 {
     /// <summary>
+    /// This class wraps and handles the various GameType that we can have in our game
     /// There are basically 2 kinds of GameType currently.
     /// 
     /// 1.) Loading of GameContent from folder and allowing user to mix and match
@@ -16,17 +17,14 @@ namespace GameLogicManagement
     /// 
     /// We can add more gamelogic types for different form of gameplay in the future 
     /// </summary>
-    class GameLogicManager
+    public class GameLogicManager
     {
-        public enum GameType {MIX_N_MATCH, MATH};
-
-        private GameType gameType; 
+        private GameType currentGameType;
 
         public GameLogicManager(GameType type)
         {
-            this.gameType = type;
+            currentGameType = type;
         }
-
 
 
 
