@@ -398,7 +398,7 @@ namespace GameStateManagementSample
             correct_snd.MultiPlay();      
             // Add Score
             GameScoringSystem.Instance.addScore(gameTimeManager.GameTime.ElapsedGameTime.Milliseconds);
-            // GameScoringSystem.Instance.checkWinningCondition(ref this.gameLevelManager);
+            GameScoringSystem.Instance.checkWinningCondition(ref this.gameLevelManager);
 
             // Display Encouragements
             textAnimator.Start();
