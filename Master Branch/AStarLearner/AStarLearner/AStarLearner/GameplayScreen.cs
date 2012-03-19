@@ -558,7 +558,7 @@ namespace GameStateManagementSample
             spriteBatch.Draw(UI_FrameLayer, UI_FrameLayerPosition, Color.White);
 
             //Printing out question, score
-            string instruction = gameLevelManager.getCurrentLevelInstruction();
+            string instruction = gameLevelManager.getCurrentLevelInstruction(this.gameLevelManager.getCurrentLevel());
             Vector2 fontOrigin_instruction = UI_Font_Score.MeasureString(instruction) / 2;
             spriteBatch.DrawString(UI_Font_Score, instruction, UI_FontPosition_Instruction, Color.Black, 0, fontOrigin_instruction, 1.5f, SpriteEffects.None, 0.5f);
 

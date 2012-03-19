@@ -6,22 +6,26 @@ using XnaHelpers.GameEngine;
 
 namespace GameLevelManagement
 {
+
     public class GameLevelManager
     {
         private int Level; //Level of the game
         private List<String> gameSets; //store all the gameset names of the given level
 
-        public  const int MAXLEVEL = 2; // Max possible amount of level for our game
+        public const int MAXLEVEL = 2; // Max possible amount of level for our game
 
-        private string instruction;
+        public ReadFromInstructionTextFile instructionFile;
+        public string instruction;
+
         private string contFolder;
-       
+
 
         #region Constructor
         public GameLevelManager(int level)
         {
             this.Level = level;
             this.gameSets = new List<string>();
+            instructionFile = new ReadFromInstructionTextFile();
         }
         #endregion
 
@@ -30,10 +34,12 @@ namespace GameLevelManagement
         {
             return this.Level;
         }
-        public string getCurrentLevelInstruction()
+
+        public string getCurrentLevelInstruction(int level)
         {
-            return this.instruction;
+            return instructionFile.getLevelInstruction(level);
         }
+
         public string getCurrentLevelContent()
         {
             return this.contFolder;
@@ -44,7 +50,7 @@ namespace GameLevelManagement
 
         public void setLevel(int level)
         {
-            if(level <= MAXLEVEL) this.Level = level; 
+            if (level <= MAXLEVEL) this.Level = level;
         }
 
         #endregion
@@ -60,13 +66,13 @@ namespace GameLevelManagement
                 case 1:
                     numSets = 9;
                     initGameSetNames(numSets);
-                    instruction = "Match the same object as";
+                    instruction = getCurrentLevelInstruction(this.Level);
                     break;
                 //LEVEL 2
                 case 2:
                     numSets = 9;
                     initGameSetNames(numSets);
-                    instruction = "Match the same fruit as";
+                    instruction = getCurrentLevelInstruction(this.Level);
                     break;
                 //LEVEL 3
                 case 3:

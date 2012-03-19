@@ -169,6 +169,7 @@
     <Compile Include="Quadratic.cs" />
     <Compile Include="Quartic.cs" />
     <Compile Include="Quintic.cs" />
+    <Compile Include="ReadFromInstructionTextFile.cs" />
     <Compile Include="ScreenFactory.cs" />
     <Compile Include="ScreenManager.cs" />
     <Compile Include="DebugHelper\ShapesOverlayDebugger.cs" />
