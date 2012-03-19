@@ -1,0 +1,11 @@
+/***********************************
+AStarLearner: Manual Documentation
+
+Attention:
+Please read carefully before you make any changes.
+If you want to insert a new instruction for the level 3
+e.g: L3: Match the correct location as
+************************************/
+
+L1: Match the same object as
+L2: Match the same fruit as
