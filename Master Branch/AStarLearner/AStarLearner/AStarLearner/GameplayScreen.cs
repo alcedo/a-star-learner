@@ -102,7 +102,7 @@ namespace GameStateManagementSample
         //Initiate GameLevelManagement
         private GameLevelManager gameLevelManager;
         private GameTimeManager gameTimeManager;
-        
+        private int currentLevel;
         //Constructor
         public GameplayScreen(int level)
         {
@@ -115,7 +115,7 @@ namespace GameStateManagementSample
                 true);
 
             //retrieve the current level of the game
-            gameLevelManager = new GameLevelManager(level);
+            this.currentLevel = level;
             gameTimeManager = new GameTimeManager();
 
          }
@@ -159,7 +159,10 @@ namespace GameStateManagementSample
             if (!instancePreserved)
             {
                 if (content == null)
+                {
                     content = new ContentManager(ScreenManager.Game.Services, "Content");
+                    gameLevelManager = new GameLevelManager(this.currentLevel, ref content);
+                }
 
                 kinectRGBVideo.Texture = new Texture2D(ScreenManager.GraphicsDevice, 640, 480, false, SurfaceFormat.Color);
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using XnaHelpers.GameEngine;
+using Microsoft.Xna.Framework.Content;
+
 
 namespace GameLevelManagement
 {
@@ -19,13 +21,12 @@ namespace GameLevelManagement
 
         private string contFolder;
 
-
         #region Constructor
-        public GameLevelManager(int level)
+        public GameLevelManager(int level, ref ContentManager content)
         {
             this.Level = level;
             this.gameSets = new List<string>();
-            instructionFile = new ReadFromInstructionTextFile();
+            instructionFile = new ReadFromInstructionTextFile(ref content);
         }
         #endregion
 
@@ -113,6 +114,13 @@ namespace GameLevelManagement
             int choice = rand.Next(0, this.gameSets.Count);
             return this.gameSets[choice];
         }//end getRandomGameSet()
+
+        //Get the number of gamesets at the current level
+        public int getNumberOfGameSets()
+        {
+            
+            return 0;
+        }
         #endregion
 
 
