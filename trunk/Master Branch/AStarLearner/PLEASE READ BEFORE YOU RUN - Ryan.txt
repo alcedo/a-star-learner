@@ -1,0 +1,2 @@
+1. Please create a new folder under your C drive as C:\InstructionFolder\
+2. Place the "Instruction.txt" under the Cdrive as "C:\InstructionFolder\Instruction.txt"
