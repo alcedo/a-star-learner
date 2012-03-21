@@ -9,33 +9,29 @@ namespace GameLevelManagement
 {
     public class ReadFromInstructionTextFile
     {
-        private List<String> allTextInFile2;
-        private String[] allTextInFile1;
+        
+        private String[] allTextInFile;
+        private int gameLevel;
         #region Constructor
-        public ReadFromInstructionTextFile(ref ContentManager content)
+        public ReadFromInstructionTextFile(ref ContentManager content, int level)
         {
             //load the file from the directory
             //Manual Documentation is required for the instructors to understand how the instruction being input 
-            
-
-            //Method 1
             string address = content.RootDirectory + "//InstructionFolder/Instruction.txt";
-            this.allTextInFile1 = System.IO.File.ReadAllLines(@address);
-            
+            this.allTextInFile = System.IO.File.ReadAllLines(@address);
+            gameLevel = level;
         }
         #endregion
 
         #region Methods
         //given a level of the game, this will return a string back to the display
-        public string getLevelInstruction(int level)
+        public string getLevelInstruction()
         {
-            int length = allTextInFile1.Length;
-            string temp = allTextInFile1[(length-1)-level];
+            int length = allTextInFile.Length;
+            string temp = allTextInFile[this.gameLevel + 8 -1 ];
             int b = temp.IndexOf(':');
             return temp.Remove(0,b+1);
         }
         #endregion
     }
-
-
 }
