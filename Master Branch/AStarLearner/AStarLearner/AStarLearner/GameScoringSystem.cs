@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GameLevelManagement;
+using Microsoft.Xna.Framework.Content;
 
 namespace AStarLearner
 {
@@ -77,20 +78,15 @@ namespace AStarLearner
         /// This function would ensure Level Progression is handled
         /// and game end conditions is handled
         /// </summary>
-        public void checkWinningCondition(ref GameLevelManager glm)
+        public void checkWinningCondition(ref GameLevelManager glm, ref ContentManager content)
         {
             if (this.totalScore > 4)
-            {
-                glm.setLevel(2);
-                /*
-                  
+            {        
                  // Change Level 
                 if(glm.getCurrentLevel() != GameLevelManager.MAXLEVEL)
-                    glm = new GameLevelManager(glm.getCurrentLevel() + 1);
-                
-                 
-                 */
-                // Ryan: change new level how ? setLevel(level) is a quick and dirty way to do things. not dynamic enough.
+                    glm = new GameLevelManager(glm.getCurrentLevel()+1, ref content);
+                //by initiate the new object into glm. it will totally change all the elements into the display 
+                 // Ryan: change new level how ? setLevel(level) is a quick and dirty way to do things. not dynamic enough.
             }
 
             else if (this.totalScore > 14)

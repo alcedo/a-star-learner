@@ -161,7 +161,6 @@ namespace GameStateManagementSample
                 if (content == null)
                 {
                     content = new ContentManager(ScreenManager.Game.Services, "Content");
-                    gameLevelManager = new GameLevelManager(this.currentLevel, ref content);
                 }
 
                 kinectRGBVideo.Texture = new Texture2D(ScreenManager.GraphicsDevice, 640, 480, false, SurfaceFormat.Color);
@@ -177,7 +176,8 @@ namespace GameStateManagementSample
                 UI_KinectFrameOffset = new Vector2(183, 225);
 
                 // Game Set inits.
-                gameLevelManager.loadGameLevel();
+                //Game Level is initiated which has all the number of sets game and instruction
+                gameLevelManager = new GameLevelManager(this.currentLevel, ref content);
                 generateGameSet();
 
                 // Load sounds 
@@ -308,23 +308,25 @@ namespace GameStateManagementSample
             solutionObjectReplica = null;
             currentGameSet.Clear();
             gameObjectPosition.Clear();
+            
+            //var set = content.LoadContent<Texture2D>(gameLevelManager.getCurrentLevelContent());
+            //List<string> contentName = new List<string>();
+            //foreach (string s in set.Keys)
+              //  contentName.Add(s);
 
-            gameLevelManager.loadGameSets();
-
-            var set = content.LoadContent<Texture2D>(gameLevelManager.getCurrentLevelContent());
-            List<string> contentName = new List<string>();
-            foreach (string s in set.Keys)
-                contentName.Add(s);
-
-            List<int> contentRand = genRandomNumberList(0, contentName.Count);
+            List<int> contentRand = genRandomNumberList(0, gameLevelManager.getContentTextures().Count);
 
             // Create solution object
-            GameSprite solutionSprite = new GameSprite(set[contentName[contentRand[0]]], 1, 1, 0, 0);
+            GameSprite solutionSprite = new GameSprite(gameLevelManager.getTextureGraphics(contentRand[0]), 1, 1, 0, 0);
+            //GameSprite solutionSprite = new GameSprite(set[contentName[contentRand[0]]], 1, 1, 0, 0);
 
             // Create selection objects
-            GameSprite selectionSprite1 = new GameSprite(set[contentName[contentRand[1]]], 1, 1, 0, 0);
-            GameSprite selectionSprite2 = new GameSprite(set[contentName[contentRand[2]]], 1, 1, 0, 0);
-            GameSprite selectionSprite3 = new GameSprite(set[contentName[contentRand[3]]], 1, 1, 0, 0);
+            GameSprite selectionSprite1 = new GameSprite(gameLevelManager.getTextureGraphics(contentRand[1]), 1, 1, 0, 0);
+            GameSprite selectionSprite2 = new GameSprite(gameLevelManager.getTextureGraphics(contentRand[2]), 1, 1, 0, 0);
+            GameSprite selectionSprite3 = new GameSprite(gameLevelManager.getTextureGraphics(contentRand[3]), 1, 1, 0, 0);
+            //GameSprite selectionSprite1 = new GameSprite(set[contentName[contentRand[1]]], 1, 1, 0, 0);
+            //GameSprite selectionSprite2 = new GameSprite(set[contentName[contentRand[2]]], 1, 1, 0, 0);
+            //GameSprite selectionSprite3 = new GameSprite(set[contentName[contentRand[3]]], 1, 1, 0, 0);
 
             // Store positions. These are namely 2 on the left, 2 on the right
             gameObjectPosition.Add(new Vector2(190, 235)); //top left 
@@ -401,7 +403,7 @@ namespace GameStateManagementSample
             correct_snd.MultiPlay();      
             // Add Score
             GameScoringSystem.Instance.addScore(gameTimeManager.GameTime.ElapsedGameTime.Milliseconds);
-            GameScoringSystem.Instance.checkWinningCondition(ref this.gameLevelManager);
+            GameScoringSystem.Instance.checkWinningCondition(ref this.gameLevelManager, ref content);
 
             // Display Encouragements
             textAnimator.Start();
@@ -561,7 +563,7 @@ namespace GameStateManagementSample
             spriteBatch.Draw(UI_FrameLayer, UI_FrameLayerPosition, Color.White);
 
             //Printing out question, score
-            string instruction = gameLevelManager.getCurrentLevelInstruction(this.gameLevelManager.getCurrentLevel());
+            string instruction = gameLevelManager.getCurrentLevelInstruction();
             Vector2 fontOrigin_instruction = UI_Font_Score.MeasureString(instruction) / 2;
             spriteBatch.DrawString(UI_Font_Score, instruction, UI_FontPosition_Instruction, Color.Black, 0, fontOrigin_instruction, 1.5f, SpriteEffects.None, 0.5f);
 

@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using XnaHelpers.GameEngine;
 using Microsoft.Xna.Framework.Content;
-
+using Microsoft.Xna.Framework.Graphics;
+using System.IO;
 
 namespace GameLevelManagement
 {
@@ -16,17 +17,22 @@ namespace GameLevelManagement
 
         public const int MAXLEVEL = 2; // Max possible amount of level for our game
 
-        public ReadFromInstructionTextFile instructionFile;
-        public string instruction;
-
-        private string contFolder;
+        private ReadFromInstructionTextFile instructionFile;
+        private string instruction;
+        private string contFolderPath;
+        private List<Texture2D> contentTextures;
+        private int numOfLevels;
 
         #region Constructor
         public GameLevelManager(int level, ref ContentManager content)
         {
             this.Level = level;
             this.gameSets = new List<string>();
-            instructionFile = new ReadFromInstructionTextFile(ref content);
+            instructionFile = new ReadFromInstructionTextFile(ref content, this.Level);
+            contentTextures = new List<Texture2D>();
+            numOfLevels = getNumOfTotalGameLevels();
+            this.initGameLevel();
+            this.loadGameSets(ref content);
         }
         #endregion
 
@@ -36,14 +42,41 @@ namespace GameLevelManagement
             return this.Level;
         }
 
-        public string getCurrentLevelInstruction(int level)
+        public string getCurrentLevelInstruction()
         {
-            return instructionFile.getLevelInstruction(level);
+            return this.instructionFile.getLevelInstruction();
         }
 
         public string getCurrentLevelContent()
         {
-            return this.contFolder;
+            return this.contFolderPath;
+        }
+        //Getting total number of level by counting how many files in the Directory "Levels"
+        public int getNumOfTotalGameLevels()
+        {
+            //Note that this only count when the levelfolder contains files. 
+            string[] NameString = Directory.GetDirectories("Content/Levels/", "*", SearchOption.TopDirectoryOnly);
+            this.numOfLevels = NameString.Length;
+            
+            return this.numOfLevels;
+        }
+
+        public int getNumOfGameSetsLevel(int level)
+        {
+            //Note that this only count when the setfolder contains files. 
+            string[] NameString = Directory.GetDirectories("Content/Levels/Level" + level, "*", SearchOption.TopDirectoryOnly);
+            return NameString.Length;
+        }
+
+        public List<Texture2D> getContentTextures()
+        {
+            return this.contentTextures;
+        }
+
+        //Access which game objects
+        public Texture2D getTextureGraphics(int position)
+        {
+            return contentTextures[position];
         }
         #endregion
 
@@ -58,42 +91,14 @@ namespace GameLevelManagement
         //<summary>
         //This function is to load a proper set given a Level
         //</summary>
-        public void loadGameLevel()
+        public void initGameLevel()
         {
             int numSets;
-            switch (this.Level)
-            {
-                //LEVEL 1
-                case 1:
-                    numSets = 9;
-                    initGameSetNames(numSets);
-                    instruction = getCurrentLevelInstruction(this.Level);
-                    break;
-                //LEVEL 2
-                case 2:
-                    numSets = 9;
-                    initGameSetNames(numSets);
-                    instruction = getCurrentLevelInstruction(this.Level);
-                    break;
-                //LEVEL 3
-                case 3:
-                    numSets = 10;
-                    initGameSetNames(numSets);
-                    break;
-                //LEVEL 4
-                case 4:
-                    numSets = 10;
-                    initGameSetNames(numSets);
-                    break;
-
-            }
-
+            numSets = getNumOfGameSetsLevel(this.Level);
+            initGameSetNames(numSets);
+            this.instruction = getCurrentLevelInstruction();
         }//end loadGameSets
 
-        public void loadGameSets()
-        {
-            this.contFolder = "Level" + this.getCurrentLevel().ToString() + "\\" + this.getRandomGameSet();
-        }
 
         #region Game Sets
         //Pushing all the Game Sets given the level
@@ -115,11 +120,16 @@ namespace GameLevelManagement
             return this.gameSets[choice];
         }//end getRandomGameSet()
 
-        //Get the number of gamesets at the current level
-        public int getNumberOfGameSets()
+        //Loading all the game objects into a list of texture2D 
+        public void loadGameSets(ref ContentManager content)
         {
-            
-            return 0;
+            this.contFolderPath = "Levels/Level" + this.getCurrentLevel().ToString() + "/" + this.getRandomGameSet();
+            for (int i = 0; i < 5; i++)
+            {
+                string path = contFolderPath + "/" + (i + 1);
+                Texture2D texture = content.Load<Texture2D>(path);
+                this.contentTextures.Add(texture);
+            }
         }
         #endregion
 
