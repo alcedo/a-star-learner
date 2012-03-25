@@ -313,6 +313,7 @@ namespace GameStateManagementSample
             //List<string> contentName = new List<string>();
             //foreach (string s in set.Keys)
               //  contentName.Add(s);
+            gameLevelManager.loadGameSets(ref content);
 
             List<int> contentRand = genRandomNumberList(0, gameLevelManager.getContentTextures().Count);
 
