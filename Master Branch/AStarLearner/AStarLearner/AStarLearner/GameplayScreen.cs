@@ -537,10 +537,17 @@ namespace GameStateManagementSample
                     gameTimeManager.restartQuestionTimeCounter();
                 }
 
+
+                // Each Game has only a fixed time
                 if (gameTimeManager.intervalPerGameRoundUp(gameTime))
                 {
+                    // For now we would indicate that the game is up by simply going back to the main menu.
                     LoadingScreen.Load(ScreenManager, false, null, new BackgroundScreen(),
                                                            new MainMenuScreen());
+
+                    GameScoringSystem.Instance.resetScore();
+
+
                 }
 
                 textAnimator.updateTweener(gameTime);

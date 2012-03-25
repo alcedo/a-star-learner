@@ -85,6 +85,7 @@ namespace AStarLearner
                  // Change Level 
             //    if(glm.getCurrentLevel() == 1)
             //        glm = new GameLevelManager(glm.getCurrentLevel() +1, ref content);
+
             }
 
             else if (this.totalScore > 14)
@@ -103,6 +104,10 @@ namespace AStarLearner
             totalScore -= baseScore;
         }
 
+        public void resetScore()
+        {
+            this.totalScore = 0;
+        }
         public int getScore()
         {
             return this.totalScore;          
