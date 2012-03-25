@@ -32,7 +32,7 @@ namespace GameLevelManagement
             contentTextures = new List<Texture2D>();
             numOfLevels = getNumOfTotalGameLevels();
             this.initGameLevel();
-            this.loadGameSets(ref content);
+            //this.loadGameSets(ref content);
         }
         #endregion
 
@@ -117,6 +117,7 @@ namespace GameLevelManagement
             Random rand = new Random((int)DateTime.Now.Ticks);
             // Rand.Next picks lower bound(Inclusive) and Upper Bound Exclusive;
             int choice = rand.Next(0, this.gameSets.Count);
+            Console.WriteLine("choice:" + choice);
             return this.gameSets[choice];
         }//end getRandomGameSet()
 
@@ -124,6 +125,8 @@ namespace GameLevelManagement
         public void loadGameSets(ref ContentManager content)
         {
             this.contFolderPath = "Levels/Level" + this.getCurrentLevel().ToString() + "/" + this.getRandomGameSet();
+            //clear the contentTextures
+            this.contentTextures = new List<Texture2D>();
             for (int i = 0; i < 5; i++)
             {
                 string path = contFolderPath + "/" + (i + 1);
