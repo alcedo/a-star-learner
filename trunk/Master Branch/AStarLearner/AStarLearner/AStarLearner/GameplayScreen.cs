@@ -83,7 +83,8 @@ namespace GameStateManagementSample
         Vector2 UI_FontPosition_Level;
 
         //Interactive Elements
-        TextAnimator textAnimator;
+        TextAnimator textAnim_GoodJob;
+        TextAnimator textAnim_GameOver;
 
         // Question related variables
         private bool questionIsCorrect = false;
@@ -210,7 +211,8 @@ namespace GameStateManagementSample
                 UI_FontPosition_Time = new Vector2(850, 22);
 
                 //Interactive Elements
-                textAnimator = new TextAnimator(content.Load<SpriteFont>("SpriteFont"));
+                textAnim_GoodJob = new TextAnimator(content.Load<SpriteFont>("SpriteFont"));
+                textAnim_GameOver = new TextAnimator(content.Load<SpriteFont>("SpriteFont"));
 
                 // once the load has finished, we use ResetElapsedTime to tell the game's
                 // timing mechanism that we have just finished a very long frame, and that
@@ -407,7 +409,7 @@ namespace GameStateManagementSample
             GameScoringSystem.Instance.checkWinningCondition(ref this.gameLevelManager, ref content);
 
             // Display Encouragements
-            textAnimator.Start();
+            textAnim_GoodJob.Start();
         }
 
         private void wrongChoice()
@@ -522,17 +524,22 @@ namespace GameStateManagementSample
                 // Question related variables initialization
                 float SecondsPassed = (float)gameTime.ElapsedGameTime.TotalSeconds;
                 particleEffect.Update(SecondsPassed);
+
+                // Update Interactive elements.
+                textAnim_GameOver.updateTweener(gameTime);
+                textAnim_GoodJob.updateTweener(gameTime);
+
                 
-                // Game Logic
                 if (gameTimeManager.intervalPerQuestionUp(gameTime))
                 {
                     generateGameSet();
                     gameTimeManager.restartQuestionTimeCounter();
                 }
 
+                // Check whether Question is correct first before processing gameTimeManager
                 if (questionIsCorrect && gameTimeManager.intervalBtwQuestionUp(gameTime))
                 {
-                    textAnimator.Stop();
+                    textAnim_GoodJob.Stop();
                     generateGameSet();
                     gameTimeManager.restartQuestionTimeCounter();
                 }
@@ -541,16 +548,23 @@ namespace GameStateManagementSample
                 // Each Game has only a fixed time
                 if (gameTimeManager.intervalPerGameRoundUp(gameTime))
                 {
-                    // For now we would indicate that the game is up by simply going back to the main menu.
-                    LoadingScreen.Load(ScreenManager, false, null, new BackgroundScreen(),
-                                                           new MainMenuScreen());
+                    textAnim_GameOver.Start();
 
-                    GameScoringSystem.Instance.resetScore();
+                    if (gameTimeManager.pause(gameTime, 6)) // pause to display textAnim to allow user to read.
+                    {
+                        textAnim_GameOver.Stop();
 
-
+                        // For now we would indicate that the game is up by simply going back to the main menu.
+                        LoadingScreen.Load(ScreenManager, false, null, new BackgroundScreen(),
+                                                               new MainMenuScreen());                        
+                       
+                        // Explicitly Reset score, due to singleton property.
+                        GameScoringSystem.Instance.resetScore();
+                    }
                 }
 
-                textAnimator.updateTweener(gameTime);
+
+
             }
         }
 
@@ -605,10 +619,15 @@ namespace GameStateManagementSample
                 particleRenderer.RenderEffect(particleEffect);
 
                 // Draw text. Text tween position are being updated in Update() 
-                textAnimator.DrawText("Good Job!~", spriteBatch,
+                textAnim_GoodJob.DrawText("Good Job!~", Color.Azure,spriteBatch,
                       new Vector2(ScreenManager.Game.Window.ClientBounds.Width / 2, ScreenManager.Game.Window.ClientBounds.Height / 3),
                       new Vector2(ScreenManager.Game.Window.ClientBounds.Width / 2, ScreenManager.Game.Window.ClientBounds.Height - 80),
-                      2.0f);
+                      2.0f, 3.0f);
+
+                textAnim_GameOver.DrawText("GAME OVER! Score: " + GameScoringSystem.Instance.getScore(), Color.DarkGreen, spriteBatch,
+                      new Vector2(ScreenManager.Game.Window.ClientBounds.Width / 2, ScreenManager.Game.Window.ClientBounds.Height / 3),
+                      new Vector2(ScreenManager.Game.Window.ClientBounds.Width / 2, ScreenManager.Game.Window.ClientBounds.Height -300),
+                      3.0f, 3.0f);
 
                 foreach (GameObject g in currentGameSet)
                     g.Draw(spriteBatch);
