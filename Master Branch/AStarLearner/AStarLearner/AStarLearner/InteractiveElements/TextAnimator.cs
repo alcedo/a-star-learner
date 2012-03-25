@@ -26,21 +26,23 @@ namespace AStarLearner.InteractiveElements
             font = f;
         }
 
-        public void DrawText(string displayText, SpriteBatch sb, Vector2 from,Vector2 to, float duration)
+        public void DrawText(string displayText, Color color  ,SpriteBatch sb, Vector2 from,Vector2 to, float duration, float scaleFactor)
         {
             // Find the center of the string
             Vector2 fontOrigin = font.MeasureString(displayText) / 2;
-            float scaleFactor = 3.0f;
-
+     
+            
+            // tweenX refers to tweening the X coordinate of our font sprite
             if (tweenX == null)
             {
-                tweenX = new Tweener(from.X, to.X, duration,  XNATweener.Bounce.EaseIn);
+                tweenX = new Tweener(from.X, to.X, duration,XNATweener.Bounce.EaseIn);
                 tweenX.Stop();
             }
 
+            // tweenY refers to tweening the Y coordinate of our font sprite
             if (tweenY == null)
             {
-                tweenY = new Tweener(from.Y, to.Y, duration, XNATweener.Bounce.EaseIn);
+                tweenY = new Tweener(from.Y, to.Y, duration,XNATweener.Bounce.EaseIn);
                 tweenY.Stop();
             }
 
@@ -48,8 +50,8 @@ namespace AStarLearner.InteractiveElements
             {
                 sb.Begin();
                 // Draw string
-                sb.DrawString(font, displayText, new Vector2(tweenX.Position, tweenY.Position), 
-                              Color.AntiqueWhite, 0, fontOrigin, scaleFactor, SpriteEffects.None, 0.5f);
+                sb.DrawString(font, displayText, new Vector2(tweenX.Position, tweenY.Position),
+                              color, 0, fontOrigin, scaleFactor, SpriteEffects.None, 0.5f);
                 sb.End();
             }
              
@@ -57,8 +59,8 @@ namespace AStarLearner.InteractiveElements
 
         public void Start()
         {
-            if (tweenX != null) tweenX.Start();
-            if (tweenY != null) tweenY.Start();
+            if (tweenX != null && !tweenX.Running) tweenX.Start();
+            if (tweenY != null && !tweenY.Running) tweenY.Start();
         }
 
         public void Stop()

@@ -9,14 +9,15 @@ namespace GameTimeManagement
     class GameTimeManager
     {
         // Timing Counter Constants
-        private int INTERVAL_BTW_QUESTIONS = 2000;
-        private int INTERVAL_PER_QUESTIONS = 20000;
-        private int INTERVAL_PER_GAME_ROUND = 120000;
+        private int INTERVAL_BTW_QUESTIONS = 2 * 1000;   //  2 seconds
+        private int INTERVAL_PER_QUESTIONS = 20 * 1000;  //  20 seconds
+        private int INTERVAL_PER_GAME_ROUND = 120 * 1000; // 120 seconds.
         
         // Tracking variables for calculation purposes
         private double intervalBtwQuestion;
         private double intervalPerQuestion;
         private double intervalPerGameRound;
+        private double genericPauseVariable;
 
         // Stores game time internally so that other functions would be able to access the game time
         public GameTime GameTime { get; set; }
@@ -27,6 +28,7 @@ namespace GameTimeManagement
             intervalBtwQuestion = 0;
             intervalPerQuestion = 0;
             intervalPerGameRound = 0;
+            genericPauseVariable = 0;
         }
         #endregion
 
@@ -39,6 +41,11 @@ namespace GameTimeManagement
         {
             intervalBtwQuestion = 0;
             intervalPerQuestion = 0;
+        }
+
+        public void resetGenericPauseTimer()
+        {
+            genericPauseVariable = 0;
         }
 
         public bool intervalPerGameRoundUp(GameTime gameTime)
@@ -61,6 +68,7 @@ namespace GameTimeManagement
             return false;
         }
 
+        // User is only given a fixed amt of time to ans each question.
         public bool intervalPerQuestionUp(GameTime gameTime)
         {
             intervalPerQuestion += (float)gameTime.ElapsedGameTime.Milliseconds;
@@ -70,5 +78,17 @@ namespace GameTimeManagement
             }
             return false;
         }
+
+        // Generic Pause function.
+        public bool pause(GameTime gameTime, int secondsToPause)
+        {
+            genericPauseVariable += (float)gameTime.ElapsedGameTime.Milliseconds;
+            if (genericPauseVariable >= secondsToPause * 1000) // multiply 1000 to convert miliseconds
+                return true;
+
+            return false;
+        }
+
+
     }
 }
