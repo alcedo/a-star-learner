@@ -1,0 +1,1034 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline">
+  <Asset Type="Pipeline:BuildItemCollection">
+    <Item>
+      <Source>plane.bmp</Source>
+      <Name>plane</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\plane.xnb</Output>
+      <Time>2012-03-07T15:23:35.4978873+08:00</Time>
+    </Item>
+    <Item>
+      <Source>yellow_ball.png</Source>
+      <Name>yellow_ball</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\yellow_ball.xnb</Output>
+      <Time>2012-03-07T15:23:25.2893034+08:00</Time>
+    </Item>
+    <Item>
+      <Source>particle1.png</Source>
+      <Name>particle1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\particle1.xnb</Output>
+      <Time>2012-03-07T15:23:33.6447813+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Cloud001.png</Source>
+      <Name>Cloud001</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Cloud001.xnb</Output>
+      <Time>2012-03-07T15:23:33.7357865+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Particle004.png</Source>
+      <Name>Particle004</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Particle004.xnb</Output>
+      <Time>2012-03-07T15:23:35.3638797+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Particle005.png</Source>
+      <Name>Particle005</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Particle005.xnb</Output>
+      <Time>2012-03-07T15:23:35.4498846+08:00</Time>
+    </Item>
+    <Item>
+      <Source>blank.png</Source>
+      <Name>blank</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\blank.xnb</Output>
+      <Time>2012-03-07T15:23:35.3708801+08:00</Time>
+    </Item>
+    <Item>
+      <Source>background.png</Source>
+      <Name>background</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\background.xnb</Output>
+      <Time>2012-03-07T15:23:33.6197799+08:00</Time>
+    </Item>
+    <Item>
+      <Source>gradient.png</Source>
+      <Name>gradient</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\gradient.xnb</Output>
+      <Time>2012-03-07T15:23:24.9202823+08:00</Time>
+    </Item>
+    <Item>
+      <Source>frame.png</Source>
+      <Name>frame</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\frame.xnb</Output>
+      <Time>2012-03-07T15:23:36.3759375+08:00</Time>
+    </Item>
+    <Item>
+      <Source>background_music.mp3</Source>
+      <Name>background_music</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\background_music.xnb</Output>
+      <Extra>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\background_music.wma</Extra>
+      <Time>2012-03-07T15:23:36.2169284+08:00</Time>
+    </Item>
+    <Item>
+      <Source>background_music2.mp3</Source>
+      <Name>background_music2</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\background_music2.xnb</Output>
+      <Extra>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\background_music2.wma</Extra>
+      <Time>2012-03-07T15:23:33.2267574+08:00</Time>
+    </Item>
+    <Item>
+      <Source>background_music3.mp3</Source>
+      <Name>background_music3</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\background_music3.xnb</Output>
+      <Extra>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\background_music3.wma</Extra>
+      <Time>2012-03-07T15:23:33.3567649+08:00</Time>
+    </Item>
+    <Item>
+      <Source>kling.wav</Source>
+      <Name>kling</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\kling.xnb</Output>
+      <Time>2012-03-07T15:23:33.5157739+08:00</Time>
+    </Item>
+    <Item>
+      <Source>BasicExplosion.xml</Source>
+      <Name>BasicExplosion</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\BasicExplosion.xnb</Output>
+      <Time>2012-03-07T15:23:25.1012927+08:00</Time>
+    </Item>
+    <Item>
+      <Source>gamefont.spritefont</Source>
+      <Name>gamefont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\gamefont.xnb</Output>
+      <Time>2012-03-07T15:23:33.1117508+08:00</Time>
+    </Item>
+    <Item>
+      <Source>menufont.spritefont</Source>
+      <Name>menufont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\menufont.xnb</Output>
+      <Time>2012-03-07T17:15:02.8694889+08:00</Time>
+    </Item>
+    <Item>
+      <Source>SpriteFont.spritefont</Source>
+      <Name>SpriteFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\SpriteFont.xnb</Output>
+      <Time>2012-03-07T15:23:27.2904179+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Main.jpg</Source>
+      <Name>Main</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Main.xnb</Output>
+      <Time>2012-03-07T17:15:02.8794894+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set1\1.png</Source>
+      <Name>Levels\Level1\Set1\1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set1\1.xnb</Output>
+      <Time>2012-03-25T22:30:14.1003821+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set1\2.png</Source>
+      <Name>Levels\Level1\Set1\2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set1\2.xnb</Output>
+      <Time>2012-03-25T22:30:14.1023822+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set1\3.png</Source>
+      <Name>Levels\Level1\Set1\3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set1\3.xnb</Output>
+      <Time>2012-03-25T22:30:14.1573854+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set1\4.png</Source>
+      <Name>Levels\Level1\Set1\4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set1\4.xnb</Output>
+      <Time>2012-03-25T22:30:14.1633857+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set1\5.png</Source>
+      <Name>Levels\Level1\Set1\5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set1\5.xnb</Output>
+      <Time>2012-03-25T22:30:14.168386+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set2\2.png</Source>
+      <Name>Levels\Level1\Set2\2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set2\2.xnb</Output>
+      <Time>2012-03-25T22:30:14.4754035+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set2\1.png</Source>
+      <Name>Levels\Level1\Set2\1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set2\1.xnb</Output>
+      <Time>2012-03-25T22:30:14.4414016+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set2\3.png</Source>
+      <Name>Levels\Level1\Set2\3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set2\3.xnb</Output>
+      <Time>2012-03-25T22:30:14.5144058+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set2\4.png</Source>
+      <Name>Levels\Level1\Set2\4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set2\4.xnb</Output>
+      <Time>2012-03-25T22:30:14.5244063+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set2\5.png</Source>
+      <Name>Levels\Level1\Set2\5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set2\5.xnb</Output>
+      <Time>2012-03-25T22:30:14.5284066+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set3\1.png</Source>
+      <Name>Levels\Level1\Set3\1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set3\1.xnb</Output>
+      <Time>2012-03-25T22:30:14.58841+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set3\2.png</Source>
+      <Name>Levels\Level1\Set3\2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set3\2.xnb</Output>
+      <Time>2012-03-25T22:30:14.5904101+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set3\5.png</Source>
+      <Name>Levels\Level1\Set3\5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set3\5.xnb</Output>
+      <Time>2012-03-25T22:30:14.5944103+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set3\3.png</Source>
+      <Name>Levels\Level1\Set3\3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set3\3.xnb</Output>
+      <Time>2012-03-25T22:30:14.5914102+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set3\4.png</Source>
+      <Name>Levels\Level1\Set3\4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set3\4.xnb</Output>
+      <Time>2012-03-25T22:30:14.5924102+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set1\1.png</Source>
+      <Name>Levels\Level2\Set1\1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set1\1.xnb</Output>
+      <Time>2012-03-25T22:30:16.5615229+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set1\2.png</Source>
+      <Name>Levels\Level2\Set1\2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set1\2.xnb</Output>
+      <Time>2012-03-25T22:30:16.6065254+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set1\3.png</Source>
+      <Name>Levels\Level2\Set1\3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set1\3.xnb</Output>
+      <Time>2012-03-25T22:30:16.6445276+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set1\4.png</Source>
+      <Name>Levels\Level2\Set1\4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set1\4.xnb</Output>
+      <Time>2012-03-25T22:30:16.6535281+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set1\5.png</Source>
+      <Name>Levels\Level2\Set1\5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set1\5.xnb</Output>
+      <Time>2012-03-25T22:30:16.6625286+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set2\1.png</Source>
+      <Name>Levels\Level2\Set2\1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set2\1.xnb</Output>
+      <Time>2012-03-25T22:30:16.6935304+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set2\2.png</Source>
+      <Name>Levels\Level2\Set2\2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set2\2.xnb</Output>
+      <Time>2012-03-25T22:30:16.7165317+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set2\3.png</Source>
+      <Name>Levels\Level2\Set2\3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set2\3.xnb</Output>
+      <Time>2012-03-25T22:30:16.7855357+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set2\4.png</Source>
+      <Name>Levels\Level2\Set2\4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set2\4.xnb</Output>
+      <Time>2012-03-25T22:30:16.8215377+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set2\5.png</Source>
+      <Name>Levels\Level2\Set2\5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set2\5.xnb</Output>
+      <Time>2012-03-25T22:30:16.8415389+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set3\1.png</Source>
+      <Name>Levels\Level2\Set3\1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set3\1.xnb</Output>
+      <Time>2012-03-25T22:30:17.0265495+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set3\2.png</Source>
+      <Name>Levels\Level2\Set3\2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set3\2.xnb</Output>
+      <Time>2012-03-25T22:30:17.0515509+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set3\3.png</Source>
+      <Name>Levels\Level2\Set3\3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set3\3.xnb</Output>
+      <Time>2012-03-25T22:30:17.1605571+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set3\4.png</Source>
+      <Name>Levels\Level2\Set3\4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set3\4.xnb</Output>
+      <Time>2012-03-25T22:30:17.1885587+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set3\5.png</Source>
+      <Name>Levels\Level2\Set3\5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set3\5.xnb</Output>
+      <Time>2012-03-25T22:30:17.2255608+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set4\1.png</Source>
+      <Name>Levels\Level1\Set4\1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set4\1.xnb</Output>
+      <Time>2012-03-25T22:30:12.3892842+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set4\2.png</Source>
+      <Name>Levels\Level1\Set4\2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set4\2.xnb</Output>
+      <Time>2012-03-25T22:30:12.4292865+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set4\3.png</Source>
+      <Name>Levels\Level1\Set4\3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set4\3.xnb</Output>
+      <Time>2012-03-25T22:30:12.49029+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set4\4.png</Source>
+      <Name>Levels\Level1\Set4\4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set4\4.xnb</Output>
+      <Time>2012-03-25T22:30:12.507291+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set4\5.png</Source>
+      <Name>Levels\Level1\Set4\5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set4\5.xnb</Output>
+      <Time>2012-03-25T22:30:12.5622941+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set5\1.png</Source>
+      <Name>Levels\Level1\Set5\1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set5\1.xnb</Output>
+      <Time>2012-03-25T22:30:12.7373041+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set5\2.png</Source>
+      <Name>Levels\Level1\Set5\2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set5\2.xnb</Output>
+      <Time>2012-03-25T22:30:12.7513049+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set5\3.png</Source>
+      <Name>Levels\Level1\Set5\3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set5\3.xnb</Output>
+      <Time>2012-03-25T22:30:12.788307+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set5\4.png</Source>
+      <Name>Levels\Level1\Set5\4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set5\4.xnb</Output>
+      <Time>2012-03-25T22:30:12.8033079+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set5\5.png</Source>
+      <Name>Levels\Level1\Set5\5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set5\5.xnb</Output>
+      <Time>2012-03-25T22:30:12.8373098+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set6\1.png</Source>
+      <Name>Levels\Level1\Set6\1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set6\1.xnb</Output>
+      <Time>2012-03-25T22:30:12.9463161+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set6\2.png</Source>
+      <Name>Levels\Level1\Set6\2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set6\2.xnb</Output>
+      <Time>2012-03-25T22:30:12.9903186+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set6\3.png</Source>
+      <Name>Levels\Level1\Set6\3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set6\3.xnb</Output>
+      <Time>2012-03-25T22:30:12.9933188+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set6\4.png</Source>
+      <Name>Levels\Level1\Set6\4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set6\4.xnb</Output>
+      <Time>2012-03-25T22:30:13.0543223+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set6\5.png</Source>
+      <Name>Levels\Level1\Set6\5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set6\5.xnb</Output>
+      <Time>2012-03-25T22:30:13.1943303+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set7\1.png</Source>
+      <Name>Levels\Level1\Set7\1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set7\1.xnb</Output>
+      <Time>2012-03-25T22:30:13.4273436+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set7\2.png</Source>
+      <Name>Levels\Level1\Set7\2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set7\2.xnb</Output>
+      <Time>2012-03-25T22:30:13.5003478+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set7\3.png</Source>
+      <Name>Levels\Level1\Set7\3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set7\3.xnb</Output>
+      <Time>2012-03-25T22:30:13.6303552+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set7\4.png</Source>
+      <Name>Levels\Level1\Set7\4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set7\4.xnb</Output>
+      <Time>2012-03-25T22:30:13.6603569+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set7\5.png</Source>
+      <Name>Levels\Level1\Set7\5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set7\5.xnb</Output>
+      <Time>2012-03-25T22:30:13.748362+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set8\1.png</Source>
+      <Name>Levels\Level1\Set8\1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set8\1.xnb</Output>
+      <Time>2012-03-25T22:30:13.7703632+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set8\2.png</Source>
+      <Name>Levels\Level1\Set8\2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set8\2.xnb</Output>
+      <Time>2012-03-25T22:30:13.8453675+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set8\3.png</Source>
+      <Name>Levels\Level1\Set8\3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set8\3.xnb</Output>
+      <Time>2012-03-25T22:30:13.8593683+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set8\4.png</Source>
+      <Name>Levels\Level1\Set8\4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set8\4.xnb</Output>
+      <Time>2012-03-25T22:30:13.8803695+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set8\5.png</Source>
+      <Name>Levels\Level1\Set8\5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set8\5.xnb</Output>
+      <Time>2012-03-25T22:30:13.9603741+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set9\1.png</Source>
+      <Name>Levels\Level1\Set9\1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set9\1.xnb</Output>
+      <Time>2012-03-25T22:30:14.0023765+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set9\3.png</Source>
+      <Name>Levels\Level1\Set9\3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set9\3.xnb</Output>
+      <Time>2012-03-25T22:30:14.0343783+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set9\2.png</Source>
+      <Name>Levels\Level1\Set9\2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set9\2.xnb</Output>
+      <Time>2012-03-25T22:30:14.0073768+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set9\4.png</Source>
+      <Name>Levels\Level1\Set9\4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set9\4.xnb</Output>
+      <Time>2012-03-25T22:30:14.0373785+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level1\Set9\5.png</Source>
+      <Name>Levels\Level1\Set9\5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level1\Set9\5.xnb</Output>
+      <Time>2012-03-25T22:30:14.0393786+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set4\1.png</Source>
+      <Name>Levels\Level2\Set4\1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set4\1.xnb</Output>
+      <Time>2012-03-25T22:30:14.6654144+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set4\2.png</Source>
+      <Name>Levels\Level2\Set4\2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set4\2.xnb</Output>
+      <Time>2012-03-25T22:30:14.7044166+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set4\3.png</Source>
+      <Name>Levels\Level2\Set4\3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set4\3.xnb</Output>
+      <Time>2012-03-25T22:30:14.7184174+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set4\4.png</Source>
+      <Name>Levels\Level2\Set4\4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set4\4.xnb</Output>
+      <Time>2012-03-25T22:30:14.7314182+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set4\5.png</Source>
+      <Name>Levels\Level2\Set4\5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set4\5.xnb</Output>
+      <Time>2012-03-25T22:30:14.8014222+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set5\1.png</Source>
+      <Name>Levels\Level2\Set5\1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set5\1.xnb</Output>
+      <Time>2012-03-25T22:30:14.868426+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set5\2.png</Source>
+      <Name>Levels\Level2\Set5\2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set5\2.xnb</Output>
+      <Time>2012-03-25T22:30:14.9064282+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set5\3.png</Source>
+      <Name>Levels\Level2\Set5\3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set5\3.xnb</Output>
+      <Time>2012-03-25T22:30:14.9184289+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set5\4.png</Source>
+      <Name>Levels\Level2\Set5\4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set5\4.xnb</Output>
+      <Time>2012-03-25T22:30:14.9514308+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set5\5.png</Source>
+      <Name>Levels\Level2\Set5\5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set5\5.xnb</Output>
+      <Time>2012-03-25T22:30:14.9624314+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set6\1.png</Source>
+      <Name>Levels\Level2\Set6\1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set6\1.xnb</Output>
+      <Time>2012-03-25T22:30:15.1794438+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set6\2.png</Source>
+      <Name>Levels\Level2\Set6\2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set6\2.xnb</Output>
+      <Time>2012-03-25T22:30:15.1934446+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set6\3.png</Source>
+      <Name>Levels\Level2\Set6\3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set6\3.xnb</Output>
+      <Time>2012-03-25T22:30:15.4504593+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set6\4.png</Source>
+      <Name>Levels\Level2\Set6\4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set6\4.xnb</Output>
+      <Time>2012-03-25T22:30:15.4694604+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set6\5.png</Source>
+      <Name>Levels\Level2\Set6\5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set6\5.xnb</Output>
+      <Time>2012-03-25T22:30:15.4924617+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set7\1.png</Source>
+      <Name>Levels\Level2\Set7\1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set7\1.xnb</Output>
+      <Time>2012-03-25T22:30:15.550465+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set7\2.png</Source>
+      <Name>Levels\Level2\Set7\2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set7\2.xnb</Output>
+      <Time>2012-03-25T22:30:15.5824669+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set7\3.png</Source>
+      <Name>Levels\Level2\Set7\3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set7\3.xnb</Output>
+      <Time>2012-03-25T22:30:15.6664717+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set7\4.png</Source>
+      <Name>Levels\Level2\Set7\4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set7\4.xnb</Output>
+      <Time>2012-03-25T22:30:15.7554768+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set7\5.png</Source>
+      <Name>Levels\Level2\Set7\5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set7\5.xnb</Output>
+      <Time>2012-03-25T22:30:15.7834784+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set8\1.png</Source>
+      <Name>Levels\Level2\Set8\1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set8\1.xnb</Output>
+      <Time>2012-03-25T22:30:15.8604828+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set8\2.png</Source>
+      <Name>Levels\Level2\Set8\2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set8\2.xnb</Output>
+      <Time>2012-03-25T22:30:15.8894844+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set8\3.png</Source>
+      <Name>Levels\Level2\Set8\3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set8\3.xnb</Output>
+      <Time>2012-03-25T22:30:15.9464877+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set8\4.png</Source>
+      <Name>Levels\Level2\Set8\4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set8\4.xnb</Output>
+      <Time>2012-03-25T22:30:16.004491+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set8\5.png</Source>
+      <Name>Levels\Level2\Set8\5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set8\5.xnb</Output>
+      <Time>2012-03-25T22:30:16.0844956+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set9\1.png</Source>
+      <Name>Levels\Level2\Set9\1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set9\1.xnb</Output>
+      <Time>2012-03-25T22:30:16.4125143+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set9\2.png</Source>
+      <Name>Levels\Level2\Set9\2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set9\2.xnb</Output>
+      <Time>2012-03-25T22:30:16.4475163+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set9\3.png</Source>
+      <Name>Levels\Level2\Set9\3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set9\3.xnb</Output>
+      <Time>2012-03-25T22:30:16.4535167+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set9\4.png</Source>
+      <Name>Levels\Level2\Set9\4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set9\4.xnb</Output>
+      <Time>2012-03-25T22:30:16.4895187+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Levels\Level2\Set9\5.png</Source>
+      <Name>Levels\Level2\Set9\5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\Levels\Level2\Set9\5.xnb</Output>
+      <Time>2012-03-25T22:30:16.5065197+08:00</Time>
+    </Item>
+    <BuildSuccessful>true</BuildSuccessful>
+    <Settings>
+      <TargetPlatform>Windows</TargetPlatform>
+      <TargetProfile>HiDef</TargetProfile>
+      <BuildConfiguration>Debug</BuildConfiguration>
+      <CompressContent>false</CompressContent>
+      <RootDirectory>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearnerContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearnerContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\bin\x86\Debug\Content\</OutputDirectory>
+    </Settings>
+    <Assemblies>
+      <Assembly>
+        <Key>C:\Users\victor\Desktop\Astar workspace alpha\Master Branch\AStarLearner\AStarLearner\AStarLearner\ProjectMercury.dll</Key>
+        <Value>2012-03-07T15:23:23.4922006+08:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+08:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
+        <Value>2010-08-23T12:41:18+08:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+08:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+08:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+08:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
+        <Value>2010-08-23T12:41:18+08:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2011-10-16T20:26:07.5926911+08:00</Value>
+      </Assembly>
+    </Assemblies>
+  </Asset>
+</XnaContent>
