@@ -80,13 +80,11 @@ namespace AStarLearner
         /// </summary>
         public void checkWinningCondition(ref GameLevelManager glm, ref ContentManager content)
         {
-            if (this.totalScore > 4)
+            if (this.totalScore > 2)
             {        
                  // Change Level 
-                if(glm.getCurrentLevel() != GameLevelManager.MAXLEVEL)
-                    glm = new GameLevelManager(glm.getCurrentLevel()+1, ref content);
-                //by initiate the new object into glm. it will totally change all the elements into the display 
-                 // Ryan: change new level how ? setLevel(level) is a quick and dirty way to do things. not dynamic enough.
+            //    if(glm.getCurrentLevel() == 1)
+            //        glm = new GameLevelManager(glm.getCurrentLevel() +1, ref content);
             }
 
             else if (this.totalScore > 14)

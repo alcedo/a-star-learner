@@ -514,7 +514,7 @@ namespace GameStateManagementSample
             else
                 pauseAlpha = Math.Max(pauseAlpha - 1f / 32, 0);
 
-            if (IsActive)
+            if (IsActive) // indicates whether this screen is front most, ie: active
             {
                 //Duplicate and store game time to allow other functions to acccess the game time var.
                 gameTimeManager.GameTime = gameTime;
