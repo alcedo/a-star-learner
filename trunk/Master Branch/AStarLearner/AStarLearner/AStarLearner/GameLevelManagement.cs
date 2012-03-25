@@ -33,6 +33,8 @@ namespace GameLevelManagement
             numOfLevels = getNumOfTotalGameLevels();
             this.initGameLevel();
             //this.loadGameSets(ref content);
+
+            Console.Out.WriteLine("TEST Current level: " + Level + "num of lvls: " + numOfLevels);
         }
         #endregion
 
@@ -117,7 +119,7 @@ namespace GameLevelManagement
             Random rand = new Random((int)DateTime.Now.Ticks);
             // Rand.Next picks lower bound(Inclusive) and Upper Bound Exclusive;
             int choice = rand.Next(0, this.gameSets.Count);
-            Console.WriteLine("choice:" + choice);
+            Console.Out.WriteLine("The level: " + this.Level + " the choice: " + choice + "amt of game Set: " + this.gameSets.Count);
             return this.gameSets[choice];
         }//end getRandomGameSet()
 
